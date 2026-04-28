@@ -1,0 +1,1343 @@
+2025-07-14 16:39:49 info: Database connection has been established successfully.
+2025-07-14 16:39:49 info: ✅ stripe_customer_id column ensured
+2025-07-14 16:39:49 info: Server running in development mode on port 8888
+2025-07-14 16:48:38 error: Unable to connect to the database: database "websitebanhangmini1" does not exist
+2025-07-14 16:49:19 info: Database connection has been established successfully.
+2025-07-14 16:49:19 info: Database tables created successfully.
+2025-07-14 16:49:19 info: Database models synchronized successfully.
+2025-07-14 16:49:19 info: ✅ stripe_customer_id column ensured
+2025-07-14 16:50:37 info: Database connection has been established successfully.
+2025-07-14 16:50:37 info: Database tables created successfully.
+2025-07-14 16:50:37 info: Database models synchronized successfully.
+2025-07-14 16:50:37 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:23:31 info: Database connection has been established successfully.
+2025-07-14 20:23:31 info: Database tables created successfully.
+2025-07-14 20:23:31 info: Database models synchronized successfully.
+2025-07-14 20:23:31 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:24:35 info: Database connection has been established successfully.
+2025-07-14 20:24:36 info: Database tables created successfully.
+2025-07-14 20:24:36 info: Database models synchronized successfully.
+2025-07-14 20:24:36 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:24:36 info: Server running in development mode on port 8888
+2025-07-14 20:28:16 info: Database connection has been established successfully.
+2025-07-14 20:28:16 info: Database connection has been established successfully.
+2025-07-14 20:28:16 error: Unable to connect to the database: Validation error
+2025-07-14 20:28:16 info: Database tables created successfully.
+2025-07-14 20:28:16 info: Database models synchronized successfully.
+2025-07-14 20:28:16 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:28:16 info: Server running in development mode on port 8888
+2025-07-14 20:28:17 info: Database connection has been established successfully.
+2025-07-14 20:28:17 info: Database connection has been established successfully.
+2025-07-14 20:28:17 error: Unable to connect to the database: Validation error
+2025-07-14 20:28:17 info: Database tables created successfully.
+2025-07-14 20:28:17 info: Database models synchronized successfully.
+2025-07-14 20:28:17 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:28:17 info: Server running in development mode on port 8888
+2025-07-14 20:34:53 info: Database connection has been established successfully.
+2025-07-14 20:34:53 info: Database connection has been established successfully.
+2025-07-14 20:34:54 error: Unable to connect to the database: Validation error
+2025-07-14 20:34:54 info: Database tables created successfully.
+2025-07-14 20:34:54 info: Database models synchronized successfully.
+2025-07-14 20:34:54 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:34:54 info: Server running in development mode on port 8888
+2025-07-14 20:34:56 info: Database connection has been established successfully.
+2025-07-14 20:34:56 info: Database connection has been established successfully.
+2025-07-14 20:34:56 error: Unable to connect to the database: Validation error
+2025-07-14 20:34:56 info: Database tables created successfully.
+2025-07-14 20:34:56 info: Database models synchronized successfully.
+2025-07-14 20:34:56 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:34:56 info: Server running in development mode on port 8888
+2025-07-14 20:34:58 info: Database connection has been established successfully.
+2025-07-14 20:34:58 info: Database connection has been established successfully.
+2025-07-14 20:34:58 error: Unable to connect to the database: Validation error
+2025-07-14 20:34:58 info: Database tables created successfully.
+2025-07-14 20:34:58 info: Database models synchronized successfully.
+2025-07-14 20:34:58 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:34:58 info: Server running in development mode on port 8888
+2025-07-14 20:35:03 info: Database connection has been established successfully.
+2025-07-14 20:35:03 info: Database connection has been established successfully.
+2025-07-14 20:35:03 error: Unable to connect to the database: Validation error
+2025-07-14 20:35:03 info: Database tables created successfully.
+2025-07-14 20:35:03 info: Database models synchronized successfully.
+2025-07-14 20:35:03 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:35:03 info: Server running in development mode on port 8888
+2025-07-14 20:35:08 info: Database connection has been established successfully.
+2025-07-14 20:35:08 info: Database connection has been established successfully.
+2025-07-14 20:35:08 error: Unable to connect to the database: Validation error
+2025-07-14 20:35:08 info: Database tables created successfully.
+2025-07-14 20:35:08 info: Database models synchronized successfully.
+2025-07-14 20:35:08 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:35:08 info: Server running in development mode on port 8888
+2025-07-14 20:35:09 info: Database connection has been established successfully.
+2025-07-14 20:35:09 info: Database connection has been established successfully.
+2025-07-14 20:35:09 error: Unable to connect to the database: Validation error
+2025-07-14 20:35:09 info: Database tables created successfully.
+2025-07-14 20:35:09 info: Database models synchronized successfully.
+2025-07-14 20:35:09 info: ✅ stripe_customer_id column ensured
+2025-07-14 20:35:09 info: Server running in development mode on port 8888
+2025-07-15 10:15:45 info: Database connection has been established successfully.
+2025-07-15 10:15:45 info: Database tables created successfully.
+2025-07-15 10:15:45 info: Database models synchronized successfully.
+2025-07-15 10:15:45 info: ✅ stripe_customer_id column ensured
+2025-07-15 10:16:57 info: Database connection has been established successfully.
+2025-07-15 10:16:57 info: Database tables created successfully.
+2025-07-15 10:16:57 info: Database models synchronized successfully.
+2025-07-15 10:16:57 info: ✅ stripe_customer_id column ensured
+2025-07-15 10:35:51 info: Database connection has been established successfully.
+2025-07-15 10:35:51 info: Database tables created successfully.
+2025-07-15 10:35:51 info: Database models synchronized successfully.
+2025-07-15 10:35:51 info: ✅ stripe_customer_id column ensured
+2025-07-15 10:35:51 info: Server running in development mode on port 8888
+2025-07-15 13:24:48 info: Database connection has been established successfully.
+2025-07-15 13:24:48 info: Database connection has been established successfully.
+2025-07-15 13:24:48 error: Unable to connect to the database: Validation error
+2025-07-15 13:24:48 info: Database tables created successfully.
+2025-07-15 13:24:48 info: Database models synchronized successfully.
+2025-07-15 13:24:48 info: ✅ stripe_customer_id column ensured
+2025-07-15 13:24:48 info: Server running in development mode on port 8888
+2025-07-15 13:58:37 info: Database connection has been established successfully.
+2025-07-15 13:58:37 info: Database connection has been established successfully.
+2025-07-15 13:58:37 error: Unable to connect to the database: Validation error
+2025-07-15 13:58:37 info: Database tables created successfully.
+2025-07-15 13:58:37 info: Database models synchronized successfully.
+2025-07-15 13:58:37 info: ✅ stripe_customer_id column ensured
+2025-07-15 13:58:37 info: Server running in development mode on port 8888
+2025-07-15 13:59:43 info: Database connection has been established successfully.
+2025-07-15 13:59:43 info: Database connection has been established successfully.
+2025-07-15 13:59:43 error: Unable to connect to the database: Validation error
+2025-07-15 13:59:43 info: Database tables created successfully.
+2025-07-15 13:59:43 info: Database models synchronized successfully.
+2025-07-15 13:59:43 info: ✅ stripe_customer_id column ensured
+2025-07-15 13:59:43 info: Server running in development mode on port 8888
+2025-07-15 13:59:54 info: Database connection has been established successfully.
+2025-07-15 13:59:54 info: Database connection has been established successfully.
+2025-07-15 13:59:54 error: Unable to connect to the database: Validation error
+2025-07-15 13:59:54 info: Database tables created successfully.
+2025-07-15 13:59:54 info: Database models synchronized successfully.
+2025-07-15 13:59:54 info: ✅ stripe_customer_id column ensured
+2025-07-15 13:59:54 info: Server running in development mode on port 8888
+2025-07-15 15:02:21 info: Database connection has been established successfully.
+2025-07-15 15:02:21 info: Database connection has been established successfully.
+2025-07-15 15:02:21 error: Unable to connect to the database: Validation error
+2025-07-15 15:02:21 info: Database tables created successfully.
+2025-07-15 15:02:21 info: Database models synchronized successfully.
+2025-07-15 15:02:21 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:02:21 info: Server running in development mode on port 8888
+2025-07-15 15:02:25 info: Database connection has been established successfully.
+2025-07-15 15:02:25 info: Database tables created successfully.
+2025-07-15 15:02:25 info: Database models synchronized successfully.
+2025-07-15 15:02:25 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:03:03 info: Database connection has been established successfully.
+2025-07-15 15:03:04 info: Database tables created successfully.
+2025-07-15 15:03:04 info: Database models synchronized successfully.
+2025-07-15 15:03:04 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:03:04 info: Server running in development mode on port 8888
+2025-07-15 15:07:24 info: Database connection has been established successfully.
+2025-07-15 15:07:24 info: Database connection has been established successfully.
+2025-07-15 15:07:24 error: Unable to connect to the database: Validation error
+2025-07-15 15:07:24 info: Database tables created successfully.
+2025-07-15 15:07:24 info: Database models synchronized successfully.
+2025-07-15 15:07:24 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:07:24 info: Server running in development mode on port 8888
+2025-07-15 15:08:18 info: Database connection has been established successfully.
+2025-07-15 15:08:18 info: Database connection has been established successfully.
+2025-07-15 15:08:18 error: Unable to connect to the database: Validation error
+2025-07-15 15:08:18 info: Database tables created successfully.
+2025-07-15 15:08:18 info: Database models synchronized successfully.
+2025-07-15 15:08:18 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:08:18 info: Server running in development mode on port 8888
+2025-07-15 15:09:33 info: Database connection has been established successfully.
+2025-07-15 15:09:33 info: Database connection has been established successfully.
+2025-07-15 15:09:33 error: Unable to connect to the database: type "public.enum_users_role" does not exist
+2025-07-15 15:09:34 info: Database tables created successfully.
+2025-07-15 15:09:34 info: Database models synchronized successfully.
+2025-07-15 15:09:34 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:09:34 info: Server running in development mode on port 8888
+2025-07-15 15:09:34 info: Database connection has been established successfully.
+2025-07-15 15:09:34 info: Database connection has been established successfully.
+2025-07-15 15:09:34 error: Unable to connect to the database: cache lookup failed for type 27850
+2025-07-15 15:09:35 info: Database tables created successfully.
+2025-07-15 15:09:35 info: Database models synchronized successfully.
+2025-07-15 15:09:35 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:09:35 info: Server running in development mode on port 8888
+2025-07-15 15:09:58 info: Database connection has been established successfully.
+2025-07-15 15:09:58 info: Database connection has been established successfully.
+2025-07-15 15:09:58 error: Unable to connect to the database: Validation error
+2025-07-15 15:09:58 info: Database tables created successfully.
+2025-07-15 15:09:58 info: Database models synchronized successfully.
+2025-07-15 15:09:58 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:09:58 info: Server running in development mode on port 8888
+2025-07-15 15:10:01 info: Database connection has been established successfully.
+2025-07-15 15:10:01 info: Database connection has been established successfully.
+2025-07-15 15:10:02 error: Unable to connect to the database: type "public.enum_users_role" does not exist
+2025-07-15 15:10:02 info: Database tables created successfully.
+2025-07-15 15:10:02 info: Database models synchronized successfully.
+2025-07-15 15:10:02 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:10:02 info: Server running in development mode on port 8888
+2025-07-15 15:23:14 info: Database connection has been established successfully.
+2025-07-15 15:23:14 info: Database connection has been established successfully.
+2025-07-15 15:23:14 error: Unable to connect to the database: Validation error
+2025-07-15 15:23:14 info: Database tables created successfully.
+2025-07-15 15:23:14 info: Database models synchronized successfully.
+2025-07-15 15:23:14 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:23:14 info: Server running in development mode on port 8888
+2025-07-15 15:51:58 info: Database connection has been established successfully.
+2025-07-15 15:51:58 info: Database connection has been established successfully.
+2025-07-15 15:51:58 error: Unable to connect to the database: cache lookup failed for type 29012
+2025-07-15 15:51:58 info: Database tables created successfully.
+2025-07-15 15:51:58 info: Database models synchronized successfully.
+2025-07-15 15:51:58 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:51:58 info: Server running in development mode on port 8888
+2025-07-15 15:52:48 info: Database connection has been established successfully.
+2025-07-15 15:52:48 info: Database connection has been established successfully.
+2025-07-15 15:52:49 error: Unable to connect to the database: Validation error
+2025-07-15 15:52:49 info: Database tables created successfully.
+2025-07-15 15:52:49 info: Database models synchronized successfully.
+2025-07-15 15:52:49 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:52:49 info: Server running in development mode on port 8888
+2025-07-15 15:54:25 info: Database connection has been established successfully.
+2025-07-15 15:54:25 info: Database connection has been established successfully.
+2025-07-15 15:54:25 error: Unable to connect to the database: Validation error
+2025-07-15 15:54:25 info: Database tables created successfully.
+2025-07-15 15:54:25 info: Database models synchronized successfully.
+2025-07-15 15:54:25 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:54:25 info: Server running in development mode on port 8888
+2025-07-15 15:55:00 info: Database connection has been established successfully.
+2025-07-15 15:55:00 info: Database tables created successfully.
+2025-07-15 15:55:00 info: Database models synchronized successfully.
+2025-07-15 15:55:00 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:58:33 info: Database connection has been established successfully.
+2025-07-15 15:58:34 info: Database tables created successfully.
+2025-07-15 15:58:34 info: Database models synchronized successfully.
+2025-07-15 15:58:34 info: ✅ stripe_customer_id column ensured
+2025-07-15 15:58:34 info: Server running in development mode on port 8888
+2025-07-15 16:16:40 info: Database connection has been established successfully.
+2025-07-15 16:16:40 info: Database connection has been established successfully.
+2025-07-15 16:16:40 info: Database connection has been established successfully.
+2025-07-15 16:16:40 error: Unable to connect to the database: Validation error
+2025-07-15 16:16:40 error: Unable to connect to the database: Validation error
+2025-07-15 16:16:40 info: Database tables created successfully.
+2025-07-15 16:16:40 info: Database models synchronized successfully.
+2025-07-15 16:16:40 info: ✅ stripe_customer_id column ensured
+2025-07-15 16:16:40 info: Server running in development mode on port 8888
+2025-07-15 16:27:14 info: Database connection has been established successfully.
+2025-07-15 16:27:14 info: Database connection has been established successfully.
+2025-07-15 16:27:14 info: Database connection has been established successfully.
+2025-07-15 16:27:14 error: Unable to connect to the database: Validation error
+2025-07-15 16:27:14 error: Unable to connect to the database: Validation error
+2025-07-15 16:27:15 info: Database tables created successfully.
+2025-07-15 16:27:15 info: Database models synchronized successfully.
+2025-07-15 16:27:15 info: ✅ stripe_customer_id column ensured
+2025-07-15 16:27:15 info: Server running in development mode on port 8888
+2025-07-15 16:27:15 info: Database connection has been established successfully.
+2025-07-15 16:27:16 info: Database tables created successfully.
+2025-07-15 16:27:16 info: Database models synchronized successfully.
+2025-07-15 16:27:16 info: ✅ stripe_customer_id column ensured
+2025-07-15 16:27:50 info: Database connection has been established successfully.
+2025-07-15 16:27:50 info: Database tables created successfully.
+2025-07-15 16:27:50 info: Database models synchronized successfully.
+2025-07-15 16:27:50 info: ✅ stripe_customer_id column ensured
+2025-07-15 16:27:50 info: Server running in development mode on port 8888
+2025-07-15 16:45:14 info: Database connection has been established successfully.
+2025-07-15 16:45:15 info: Database tables created successfully.
+2025-07-15 16:45:15 info: Database models synchronized successfully.
+2025-07-15 16:45:15 info: ✅ stripe_customer_id column ensured
+2025-07-15 16:45:15 info: Server running in development mode on port 8888
+2025-07-16 08:30:59 info: Database connection has been established successfully.
+2025-07-16 08:30:59 info: Database tables created successfully.
+2025-07-16 08:30:59 info: Database models synchronized successfully.
+2025-07-16 08:30:59 info: ✅ stripe_customer_id column ensured
+2025-07-16 08:30:59 info: Server running in development mode on port 8888
+2025-07-16 09:28:19 info: Database connection has been established successfully.
+2025-07-16 09:28:19 info: Database tables created successfully.
+2025-07-16 09:28:19 info: Database models synchronized successfully.
+2025-07-16 09:28:19 info: ✅ stripe_customer_id column ensured
+2025-07-16 09:28:19 info: Server running in development mode on port 8888
+2025-07-16 10:05:18 info: Database connection has been established successfully.
+2025-07-16 10:05:19 info: Database tables created successfully.
+2025-07-16 10:05:19 info: Database models synchronized successfully.
+2025-07-16 10:05:19 info: ✅ stripe_customer_id column ensured
+2025-07-16 10:30:01 info: Database connection has been established successfully.
+2025-07-16 10:30:01 info: Database tables created successfully.
+2025-07-16 10:30:01 info: Database models synchronized successfully.
+2025-07-16 10:30:01 info: ✅ stripe_customer_id column ensured
+2025-07-16 10:30:01 info: Server running in development mode on port 8888
+2025-07-16 10:31:04 info: Database connection has been established successfully.
+2025-07-16 10:31:04 info: Database tables created successfully.
+2025-07-16 10:31:04 info: Database models synchronized successfully.
+2025-07-16 10:31:04 info: ✅ stripe_customer_id column ensured
+2025-07-16 10:31:04 info: Server running in development mode on port 8888
+2025-07-16 10:31:20 info: Database connection has been established successfully.
+2025-07-16 10:31:20 info: Database tables created successfully.
+2025-07-16 10:31:20 info: Database models synchronized successfully.
+2025-07-16 10:31:20 info: ✅ stripe_customer_id column ensured
+2025-07-16 10:31:20 info: Server running in development mode on port 8888
+2025-07-16 11:29:30 info: Database connection has been established successfully.
+2025-07-16 11:29:30 info: Database tables created successfully.
+2025-07-16 11:29:30 info: Database models synchronized successfully.
+2025-07-16 11:36:04 info: Database connection has been established successfully.
+2025-07-16 11:36:04 info: Database tables created successfully.
+2025-07-16 11:36:04 info: Database models synchronized successfully.
+2025-07-16 11:36:26 info: Database connection has been established successfully.
+2025-07-16 11:36:26 info: Database tables created successfully.
+2025-07-16 11:36:26 info: Database models synchronized successfully.
+2025-07-16 11:36:26 info: ✅ stripe_customer_id column ensured
+2025-07-16 11:36:49 info: Database connection has been established successfully.
+2025-07-16 11:36:49 info: Database tables created successfully.
+2025-07-16 11:36:49 info: Database models synchronized successfully.
+2025-07-16 11:40:43 info: Database connection has been established successfully.
+2025-07-16 11:40:43 info: Database tables created successfully.
+2025-07-16 11:40:43 info: Database models synchronized successfully.
+2025-07-16 11:40:43 info: ✅ stripe_customer_id column ensured
+2025-07-17 16:05:35 info: Database connection has been established successfully.
+2025-07-17 16:05:35 info: Database connection has been established successfully.
+2025-07-17 16:05:35 error: Unable to connect to the database: Validation error
+2025-07-17 16:05:35 info: Database tables created successfully.
+2025-07-17 16:05:35 info: Database models synchronized successfully.
+2025-07-17 16:05:35 info: ✅ stripe_customer_id column ensured
+2025-07-17 16:06:36 info: Database connection has been established successfully.
+2025-07-17 16:06:36 info: Database tables created successfully.
+2025-07-17 16:06:36 info: Database models synchronized successfully.
+2025-07-17 16:24:15 info: Database connection has been established successfully.
+2025-07-17 16:24:15 info: Database tables created successfully.
+2025-07-17 16:24:15 info: Database models synchronized successfully.
+2025-07-17 16:24:15 info: ✅ stripe_customer_id column ensured
+2025-07-17 16:28:32 info: Database connection has been established successfully.
+2025-07-17 16:28:32 info: Database connection has been established successfully.
+2025-07-17 16:28:32 error: Unable to connect to the database: Validation error
+2025-07-17 16:28:32 info: Database tables created successfully.
+2025-07-17 16:28:32 info: Database models synchronized successfully.
+2025-07-17 16:28:32 info: ✅ stripe_customer_id column ensured
+2025-07-17 16:28:32 info: Server running in development mode on port 8888
+2025-07-17 16:45:15 info: Database connection has been established successfully.
+2025-07-17 16:45:15 info: Database connection has been established successfully.
+2025-07-17 16:45:15 error: Unable to connect to the database: Validation error
+2025-07-17 16:45:15 info: Database tables created successfully.
+2025-07-17 16:45:15 info: Database models synchronized successfully.
+2025-07-17 16:45:15 info: ✅ stripe_customer_id column ensured
+2025-07-17 16:45:15 info: Server running in development mode on port 8888
+2025-07-17 17:01:32 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-07-17 17:01:32 info: 💥 Process terminated!
+2025-07-17 17:03:48 info: Database connection has been established successfully.
+2025-07-17 17:03:48 info: Database tables created successfully.
+2025-07-17 17:03:48 info: Database models synchronized successfully.
+2025-07-17 17:03:48 info: ✅ stripe_customer_id column ensured
+2025-07-17 17:03:48 info: Server running in development mode on port 8888
+2025-07-17 17:08:15 info: Database connection has been established successfully.
+2025-07-17 17:08:15 info: Database tables created successfully.
+2025-07-17 17:08:15 info: Database models synchronized successfully.
+2025-07-17 17:08:15 info: ✅ stripe_customer_id column ensured
+2025-07-17 17:08:15 info: Server running in development mode on port 8888
+2025-07-17 17:13:47 info: Database connection has been established successfully.
+2025-07-17 17:13:47 info: Database tables created successfully.
+2025-07-17 17:13:47 info: Database models synchronized successfully.
+2025-07-17 17:13:47 info: ✅ stripe_customer_id column ensured
+2025-07-17 17:13:47 info: Server running in development mode on port 8888
+2025-07-17 17:17:04 info: Database connection has been established successfully.
+2025-07-17 17:17:04 info: Database tables created successfully.
+2025-07-17 17:17:04 info: Database models synchronized successfully.
+2025-07-17 17:17:04 info: ✅ stripe_customer_id column ensured
+2025-07-17 17:17:04 info: Server running in development mode on port 8888
+2025-07-17 17:17:06 info: Database connection has been established successfully.
+2025-07-17 17:17:06 info: Database tables created successfully.
+2025-07-17 17:17:06 info: Database models synchronized successfully.
+2025-07-17 17:17:14 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-07-17 17:17:14 info: 💥 Process terminated!
+2025-07-17 17:17:22 info: Database connection has been established successfully.
+2025-07-17 17:17:22 info: Database tables created successfully.
+2025-07-17 17:17:22 info: Database models synchronized successfully.
+2025-07-17 17:17:22 info: ✅ stripe_customer_id column ensured
+2025-07-17 17:17:22 info: Server running in development mode on port 8888
+2025-07-17 17:25:24 info: Database connection has been established successfully.
+2025-07-17 17:25:25 info: Database tables created successfully.
+2025-07-17 17:25:25 info: Database models synchronized successfully.
+2025-07-17 17:25:37 info: Database connection has been established successfully.
+2025-07-17 17:25:37 info: Database tables created successfully.
+2025-07-17 17:25:37 info: Database models synchronized successfully.
+2025-07-17 17:32:57 info: Database connection has been established successfully.
+2025-07-17 17:32:58 info: Database tables created successfully.
+2025-07-17 17:32:58 info: Database models synchronized successfully.
+2025-07-17 17:32:58 info: ✅ stripe_customer_id column ensured
+2025-07-18 09:18:21 info: Database connection has been established successfully.
+2025-07-18 09:18:21 info: Database tables created successfully.
+2025-07-18 09:18:21 info: Database models synchronized successfully.
+2025-07-18 09:18:21 info: ✅ stripe_customer_id column ensured
+2025-07-18 09:28:28 info: Database connection has been established successfully.
+2025-07-18 09:28:29 info: Database tables created successfully.
+2025-07-18 09:28:29 info: Database models synchronized successfully.
+2025-07-18 09:28:29 info: ✅ stripe_customer_id column ensured
+2025-07-18 09:28:29 info: Server running in development mode on port 8888
+2025-07-18 10:27:52 info: Database connection has been established successfully.
+2025-07-18 10:27:52 info: Database tables created successfully.
+2025-07-18 10:27:52 info: Database models synchronized successfully.
+2025-07-18 10:27:52 info: ✅ stripe_customer_id column ensured
+2025-07-18 10:27:52 info: Server running in development mode on port 8888
+2025-07-18 10:28:33 info: Database connection has been established successfully.
+2025-07-18 10:28:33 info: Database tables created successfully.
+2025-07-18 10:28:33 info: Database models synchronized successfully.
+2025-07-18 10:28:33 info: ✅ stripe_customer_id column ensured
+2025-07-18 10:28:33 info: Server running in development mode on port 8888
+2025-07-18 10:32:04 info: Database connection has been established successfully.
+2025-07-18 10:32:04 info: Database tables created successfully.
+2025-07-18 10:32:04 info: Database models synchronized successfully.
+2025-07-18 10:32:04 info: ✅ stripe_customer_id column ensured
+2025-07-18 10:32:04 info: Server running in development mode on port 8888
+2025-07-18 10:46:01 info: Database connection has been established successfully.
+2025-07-18 10:46:01 info: Database tables created successfully.
+2025-07-18 10:46:01 info: Database models synchronized successfully.
+2025-07-18 10:46:01 info: ✅ stripe_customer_id column ensured
+2025-07-18 10:46:01 info: Server running in development mode on port 8888
+2025-07-18 10:52:18 info: Database connection has been established successfully.
+2025-07-18 10:52:19 info: Database tables created successfully.
+2025-07-18 10:52:19 info: Database models synchronized successfully.
+2025-07-18 10:52:19 info: ✅ stripe_customer_id column ensured
+2025-07-18 10:52:19 info: Server running in development mode on port 8888
+2025-07-18T04:04:59.901Z info: ADMIN_PRODUCT_ACTION
+2025-07-18 14:10:03 info: Database connection has been established successfully.
+2025-07-18 14:10:03 info: Database tables created successfully.
+2025-07-18 14:10:03 info: Database models synchronized successfully.
+2025-07-18 14:10:03 info: ✅ stripe_customer_id column ensured
+2025-07-18 14:10:03 info: Server running in development mode on port 8888
+2025-07-18 14:27:20 info: Database connection has been established successfully.
+2025-07-18 14:27:20 error: Unable to connect to the database: relation "Products" does not exist
+2025-07-18 14:27:21 info: Database connection has been established successfully.
+2025-07-18 14:27:22 error: Unable to connect to the database: relation "Products" does not exist
+2025-07-18 14:28:22 info: Database connection has been established successfully.
+2025-07-18 14:28:23 error: Unable to connect to the database: relation "Products" does not exist
+2025-07-18 14:29:00 info: Database connection has been established successfully.
+2025-07-18 14:29:00 error: Unable to connect to the database: relation "Products" does not exist
+2025-07-18 14:33:43 info: Database connection has been established successfully.
+2025-07-18 14:33:43 info: Database models loaded successfully.
+2025-07-18 14:33:43 info: Database connection has been established successfully.
+2025-07-18 14:33:43 info: Database models loaded successfully.
+2025-07-18 14:33:43 error: Unable to connect to the database: Validation error
+2025-07-18 14:33:44 error: Unable to connect to the database: relation "Products" does not exist
+2025-07-18 14:33:44 info: Database connection has been established successfully.
+2025-07-18 14:33:44 info: Database models loaded successfully.
+2025-07-18 14:33:44 error: Unable to connect to the database: relation "Products" does not exist
+2025-07-18 14:34:14 info: Database connection has been established successfully.
+2025-07-18 14:34:14 info: Database models loaded successfully.
+2025-07-18 14:34:15 error: Unable to connect to the database: relation "Products" does not exist
+2025-07-18 16:34:41 info: Database connection has been established successfully.
+2025-07-18 16:34:41 info: Database connection has been established successfully.
+2025-07-18 16:34:41 info: Database models loaded successfully.
+2025-07-18 16:34:41 info: Database models loaded successfully.
+2025-07-18 16:34:41 error: Unable to connect to the database: Validation error
+2025-07-18 16:34:41 info: Database tables created successfully.
+2025-07-18 16:34:41 info: Database models synchronized successfully.
+2025-07-18 16:34:41 info: ✅ stripe_customer_id column ensured
+2025-07-18 16:34:41 info: Server running in development mode on port 8888
+2025-07-18 16:34:42 info: Database connection has been established successfully.
+2025-07-18 16:34:42 info: Database models loaded successfully.
+2025-07-18 16:34:42 info: Database tables created successfully.
+2025-07-18 16:34:42 info: Database models synchronized successfully.
+2025-07-18 16:34:42 info: ✅ stripe_customer_id column ensured
+2025-07-18 16:35:33 info: Database connection has been established successfully.
+2025-07-18 16:35:33 info: Database models loaded successfully.
+2025-07-18 16:35:33 info: Database connection has been established successfully.
+2025-07-18 16:35:33 info: Database models loaded successfully.
+2025-07-18 16:35:33 error: Unable to connect to the database: Validation error
+2025-07-18 16:35:33 info: Database tables created successfully.
+2025-07-18 16:35:33 info: Database models synchronized successfully.
+2025-07-18 16:35:33 info: ✅ stripe_customer_id column ensured
+2025-07-18 16:35:33 info: Server running in development mode on port 8888
+2025-07-18 16:35:34 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-07-18 16:35:34 info: 💥 Process terminated!
+2025-07-18 16:35:41 info: Database connection has been established successfully.
+2025-07-18 16:35:41 info: Database models loaded successfully.
+2025-07-18 16:35:41 info: Database tables created successfully.
+2025-07-18 16:35:41 info: Database models synchronized successfully.
+2025-07-18 16:35:41 info: ✅ stripe_customer_id column ensured
+2025-07-18 16:35:41 info: Server running in development mode on port 8888
+2025-07-18 19:54:52 info: Database connection has been established successfully.
+2025-07-18 19:54:52 info: Database connection has been established successfully.
+2025-07-18 19:54:52 info: Database models loaded successfully.
+2025-07-18 19:54:52 info: Database models loaded successfully.
+2025-07-18 19:54:53 error: Unable to connect to the database: cache lookup failed for type 50736
+2025-07-18 19:54:53 info: Database tables created successfully.
+2025-07-18 19:54:53 info: Database models synchronized successfully.
+2025-07-18 19:55:17 info: Database connection has been established successfully.
+2025-07-18 19:55:17 info: Database models loaded successfully.
+2025-07-18 19:55:17 info: Database tables created successfully.
+2025-07-18 19:55:17 info: Database models synchronized successfully.
+2025-07-18 19:55:17 info: ✅ stripe_customer_id column ensured
+2025-07-18 19:58:32 info: Database connection has been established successfully.
+2025-07-18 19:58:32 info: Database models loaded successfully.
+2025-07-18 19:58:32 info: Database tables created successfully.
+2025-07-18 19:58:32 info: Database models synchronized successfully.
+2025-07-18 19:58:32 info: ✅ stripe_customer_id column ensured
+2025-07-18 19:58:32 info: Server running in development mode on port 8888
+2025-07-19 10:41:17 info: Database connection has been established successfully.
+2025-07-19 10:41:17 info: Database models loaded successfully.
+2025-07-19 10:41:18 info: Database tables created successfully.
+2025-07-19 10:41:18 info: Database models synchronized successfully.
+2025-07-19 10:41:34 info: Database connection has been established successfully.
+2025-07-19 10:41:34 info: Database models loaded successfully.
+2025-07-19 10:41:34 info: Database tables created successfully.
+2025-07-19 10:41:34 info: Database models synchronized successfully.
+2025-07-19 10:41:34 info: ✅ stripe_customer_id column ensured
+2025-07-19 10:41:34 info: Server running in development mode on port 8888
+2025-07-19 11:10:33 info: Database connection has been established successfully.
+2025-07-19 11:10:33 info: Database models loaded successfully.
+2025-07-19 11:10:34 info: Database tables created successfully.
+2025-07-19 11:10:34 info: Database models synchronized successfully.
+2025-07-19 11:10:34 info: ✅ stripe_customer_id column ensured
+2025-07-19 11:13:41 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-07-19 11:13:41 info: 💥 Process terminated!
+2025-07-19 11:13:57 info: Database connection has been established successfully.
+2025-07-19 11:13:57 info: Database models loaded successfully.
+2025-07-19 11:13:57 info: Database tables created successfully.
+2025-07-19 11:13:57 info: Database models synchronized successfully.
+2025-07-19 11:13:57 info: ✅ stripe_customer_id column ensured
+2025-07-19 11:13:57 info: Server running in development mode on port 8888
+2025-07-20 17:25:17 info: Database connection has been established successfully.
+2025-07-20 17:25:17 info: Database models loaded successfully.
+2025-07-20 17:25:18 info: Database tables created successfully.
+2025-07-20 17:25:18 info: Database models synchronized successfully.
+2025-07-20 17:25:18 info: ✅ stripe_customer_id column ensured
+2025-07-20 17:25:18 info: Server running in development mode on port 8888
+2025-07-20 17:25:59 info: Database connection has been established successfully.
+2025-07-20 17:25:59 info: Database models loaded successfully.
+2025-07-20 17:25:59 info: Database tables created successfully.
+2025-07-20 17:25:59 info: Database models synchronized successfully.
+2025-07-20 17:25:59 info: ✅ stripe_customer_id column ensured
+2025-07-20 17:27:29 info: Database connection has been established successfully.
+2025-07-20 17:27:29 info: Database models loaded successfully.
+2025-07-20 17:27:29 info: Database tables created successfully.
+2025-07-20 17:27:29 info: Database models synchronized successfully.
+2025-07-20 17:27:29 info: ✅ stripe_customer_id column ensured
+2025-07-20 17:27:29 info: Server running in development mode on port 8888
+2025-07-20T11:19:05.376Z info: ADMIN_PRODUCT_ACTION
+2025-07-20T11:35:44.467Z info: ADMIN_PRODUCT_ACTION
+2025-07-20T11:43:15.581Z info: ADMIN_PRODUCT_ACTION
+2025-07-20T11:43:26.297Z info: ADMIN_PRODUCT_ACTION
+2025-07-20 18:58:42 info: Database connection has been established successfully.
+2025-07-20 18:58:42 info: Database connection has been established successfully.
+2025-07-20 18:58:42 info: Database models loaded successfully.
+2025-07-20 18:58:42 info: Database models loaded successfully.
+2025-07-20 18:58:42 error: Unable to connect to the database: Validation error
+2025-07-20 18:58:42 info: Database tables created successfully.
+2025-07-20 18:58:42 info: Database models synchronized successfully.
+2025-07-20 18:58:42 info: ✅ stripe_customer_id column ensured
+2025-07-20 18:58:42 info: Server running in development mode on port 8888
+2025-07-20 18:58:43 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-07-20 18:58:43 info: 💥 Process terminated!
+2025-07-20 18:58:43 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-07-20 18:58:43 info: 💥 Process terminated!
+2025-07-20 19:00:21 info: Database connection has been established successfully.
+2025-07-20 19:00:21 info: Database models loaded successfully.
+2025-07-20 19:00:21 info: Database tables created successfully.
+2025-07-20 19:00:21 info: Database models synchronized successfully.
+2025-07-20 19:00:21 info: ✅ stripe_customer_id column ensured
+2025-07-20 19:00:21 info: Server running in development mode on port 8888
+2025-07-20T15:32:10.887Z info: ADMIN_PRODUCT_ACTION
+2025-07-20T15:33:36.922Z info: ADMIN_PRODUCT_ACTION
+2025-07-20 22:35:01 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-07-20 22:35:01 info: 💥 Process terminated!
+2025-07-20 22:35:32 info: Database connection has been established successfully.
+2025-07-20 22:35:32 info: Database models loaded successfully.
+2025-07-20 22:35:32 info: Database tables created successfully.
+2025-07-20 22:35:32 info: Database models synchronized successfully.
+2025-07-20 22:35:32 info: ✅ stripe_customer_id column ensured
+2025-07-20 22:35:32 info: Server running in development mode on port 8888
+2025-07-20T15:42:59.523Z info: ADMIN_PRODUCT_ACTION
+2025-07-20T15:57:43.438Z info: ADMIN_PRODUCT_ACTION
+2025-07-20T15:57:58.310Z info: ADMIN_PRODUCT_ACTION
+2025-07-20T16:02:31.140Z info: ADMIN_PRODUCT_ACTION
+2025-07-20 23:12:38 info: Database connection has been established successfully.
+2025-07-20 23:12:38 info: Database models loaded successfully.
+2025-07-20 23:12:38 info: Database tables created successfully.
+2025-07-20 23:12:38 info: Database models synchronized successfully.
+2025-07-20 23:12:38 info: ✅ stripe_customer_id column ensured
+2025-07-20 23:12:56 info: Database connection has been established successfully.
+2025-07-20 23:12:56 info: Database models loaded successfully.
+2025-07-20 23:12:56 info: Database tables created successfully.
+2025-07-20 23:12:56 info: Database models synchronized successfully.
+2025-07-20 23:12:56 info: ✅ stripe_customer_id column ensured
+2025-07-21T01:55:48.460Z info: ADMIN_PRODUCT_ACTION
+2025-07-21 09:04:30 info: Database connection has been established successfully.
+2025-07-21 09:04:30 info: Database models loaded successfully.
+2025-07-21 09:04:30 info: Database tables created successfully.
+2025-07-21 09:04:30 info: Database models synchronized successfully.
+2025-07-21 09:04:31 info: Database connection has been established successfully.
+2025-07-21 09:04:31 info: Database models loaded successfully.
+2025-07-21 09:04:31 info: Database tables created successfully.
+2025-07-21 09:04:31 info: Database models synchronized successfully.
+2025-07-21 09:04:31 info: ✅ stripe_customer_id column ensured
+2025-07-21T02:16:45.675Z info: ADMIN_PRODUCT_ACTION
+2025-07-21 09:20:42 info: Database connection has been established successfully.
+2025-07-21 09:20:42 info: Database connection has been established successfully.
+2025-07-21 09:20:42 info: Database models loaded successfully.
+2025-07-21 09:20:42 info: Database models loaded successfully.
+2025-07-21 09:20:42 error: Unable to connect to the database: Validation error
+2025-07-21 09:20:42 info: Database tables created successfully.
+2025-07-21 09:20:42 info: Database models synchronized successfully.
+2025-07-21 09:20:42 info: ✅ stripe_customer_id column ensured
+2025-07-21 09:25:01 info: Database connection has been established successfully.
+2025-07-21 09:25:01 info: Database connection has been established successfully.
+2025-07-21 09:25:01 info: Database models loaded successfully.
+2025-07-21 09:25:01 info: Database models loaded successfully.
+2025-07-21 09:25:01 error: Unable to connect to the database: Validation error
+2025-07-21 09:25:01 info: Database tables created successfully.
+2025-07-21 09:26:44 info: Database connection has been established successfully.
+2025-07-21 09:26:44 info: Database connection has been established successfully.
+2025-07-21 09:26:44 info: Database models loaded successfully.
+2025-07-21 09:26:44 info: Database models loaded successfully.
+2025-07-21 09:26:44 error: Unable to connect to the database: Validation error
+2025-07-21 09:26:44 info: Database tables created successfully.
+2025-07-21 09:26:44 info: Database models synchronized successfully.
+2025-07-21 09:26:44 info: ✅ stripe_customer_id column ensured
+2025-07-21T02:32:20.079Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T02:32:54.575Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T02:34:38.074Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T02:36:36.330Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T02:36:57.759Z info: ADMIN_PRODUCT_ACTION
+2025-07-21 09:44:44 info: Database connection has been established successfully.
+2025-07-21 09:44:44 info: Database connection has been established successfully.
+2025-07-21 09:44:44 info: Database models loaded successfully.
+2025-07-21 09:44:44 info: Database models loaded successfully.
+2025-07-21 09:44:44 error: Unable to connect to the database: Validation error
+2025-07-21 09:44:44 info: Database tables created successfully.
+2025-07-21 09:44:44 info: Database models synchronized successfully.
+2025-07-21 09:44:44 info: ✅ stripe_customer_id column ensured
+2025-07-21 09:46:14 info: Database connection has been established successfully.
+2025-07-21 09:46:14 info: Database connection has been established successfully.
+2025-07-21 09:46:14 info: Database models loaded successfully.
+2025-07-21 09:46:14 info: Database models loaded successfully.
+2025-07-21 09:46:14 error: Unable to connect to the database: Validation error
+2025-07-21 09:46:14 info: Database tables created successfully.
+2025-07-21 09:56:28 info: Database connection has been established successfully.
+2025-07-21 09:56:28 info: Database models loaded successfully.
+2025-07-21 09:56:28 info: Database tables created successfully.
+2025-07-21 09:56:28 info: Database models synchronized successfully.
+2025-07-21 09:56:28 info: ✅ stripe_customer_id column ensured
+2025-07-21 09:56:28 info: Server running in development mode on port 8888
+2025-07-21 10:18:00 info: Database connection has been established successfully.
+2025-07-21 10:18:00 info: Database models loaded successfully.
+2025-07-21 10:18:00 info: Database tables created successfully.
+2025-07-21 10:18:00 info: Database models synchronized successfully.
+2025-07-21 10:18:00 info: ✅ stripe_customer_id column ensured
+2025-07-21 10:18:00 info: Server running in development mode on port 8888
+2025-07-21 10:20:50 info: Database connection has been established successfully.
+2025-07-21 10:20:50 info: Database models loaded successfully.
+2025-07-21 10:20:50 info: Database tables created successfully.
+2025-07-21 10:20:50 info: Database models synchronized successfully.
+2025-07-21 10:20:50 info: ✅ stripe_customer_id column ensured
+2025-07-21 10:20:50 info: Server running in development mode on port 8888
+2025-07-21 10:25:09 info: Database connection has been established successfully.
+2025-07-21 10:25:09 info: Database models loaded successfully.
+2025-07-21 10:25:09 info: Database tables created successfully.
+2025-07-21 10:25:09 info: Database models synchronized successfully.
+2025-07-21 10:25:09 info: ✅ stripe_customer_id column ensured
+2025-07-21 10:25:31 info: Database connection has been established successfully.
+2025-07-21 10:25:31 info: Database models loaded successfully.
+2025-07-21 10:25:31 info: Database tables created successfully.
+2025-07-21 10:25:31 info: Database models synchronized successfully.
+2025-07-21 10:25:31 info: ✅ stripe_customer_id column ensured
+2025-07-21 10:30:11 info: Database connection has been established successfully.
+2025-07-21 10:30:11 info: Database models loaded successfully.
+2025-07-21 10:30:11 info: Database tables created successfully.
+2025-07-21 10:30:11 info: Database models synchronized successfully.
+2025-07-21 10:30:11 info: ✅ stripe_customer_id column ensured
+2025-07-21 10:30:11 info: Server running in development mode on port 8888
+2025-07-21T03:33:48.227Z info: ADMIN_PRODUCT_ACTION
+2025-07-21 11:37:22 info: Database connection has been established successfully.
+2025-07-21 11:37:22 info: Database models loaded successfully.
+2025-07-21 11:37:23 info: Database tables created successfully.
+2025-07-21 11:37:23 info: Database models synchronized successfully.
+2025-07-21 11:37:23 info: ✅ stripe_customer_id column ensured
+2025-07-21T06:41:57.586Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T06:44:16.720Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T06:45:04.836Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T06:45:53.005Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T06:46:29.671Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T06:50:49.770Z info: ADMIN_PRODUCT_ACTION
+2025-07-21 14:43:04 info: Database connection has been established successfully.
+2025-07-21 14:43:04 info: Database models loaded successfully.
+2025-07-21 14:43:04 info: Database tables created successfully.
+2025-07-21 14:43:04 info: Database models synchronized successfully.
+2025-07-21 14:43:04 info: ✅ stripe_customer_id column ensured
+2025-07-21 14:47:02 info: Database connection has been established successfully.
+2025-07-21 14:47:02 info: Database models loaded successfully.
+2025-07-21 14:47:03 info: Database tables created successfully.
+2025-07-21 14:47:03 info: Database models synchronized successfully.
+2025-07-21 14:47:03 info: ✅ stripe_customer_id column ensured
+2025-07-21 14:47:03 info: Server running in development mode on port 8888
+2025-07-21 14:48:43 info: Database connection has been established successfully.
+2025-07-21 14:48:43 info: Database models loaded successfully.
+2025-07-21 14:48:43 info: Database tables created successfully.
+2025-07-21 14:48:43 info: Database models synchronized successfully.
+2025-07-21 14:48:43 info: ✅ stripe_customer_id column ensured
+2025-07-21 14:48:43 info: Server running in development mode on port 8888
+2025-07-21T08:06:53.061Z info: ADMIN_PRODUCT_ACTION
+2025-07-21T08:11:54.196Z info: ADMIN_PRODUCT_ACTION
+2025-07-21 15:12:46 info: Database connection has been established successfully.
+2025-07-21 15:12:46 info: Database models loaded successfully.
+2025-07-21 15:12:46 info: Database tables created successfully.
+2025-07-21 15:12:46 info: Database models synchronized successfully.
+2025-07-21 15:12:46 info: ✅ stripe_customer_id column ensured
+2025-07-21 15:12:46 info: Server running in development mode on port 8888
+2025-07-21 15:13:58 info: Database connection has been established successfully.
+2025-07-21 15:13:58 info: Database models loaded successfully.
+2025-07-21 15:13:58 info: Database tables created successfully.
+2025-07-21 15:13:58 info: Database models synchronized successfully.
+2025-07-21 15:13:58 info: ✅ stripe_customer_id column ensured
+2025-07-21 15:13:58 info: Server running in development mode on port 8888
+2025-07-21 15:14:06 info: Database connection has been established successfully.
+2025-07-21 15:14:06 info: Database models loaded successfully.
+2025-07-21 15:14:06 info: Database tables created successfully.
+2025-07-21 15:14:06 info: Database models synchronized successfully.
+2025-07-21 15:14:06 info: ✅ stripe_customer_id column ensured
+2025-07-21 15:14:06 info: Server running in development mode on port 8888
+2025-07-21 15:14:14 info: Database connection has been established successfully.
+2025-07-21 15:14:14 info: Database models loaded successfully.
+2025-07-21 15:14:15 info: Database tables created successfully.
+2025-07-21 15:14:15 info: Database models synchronized successfully.
+2025-07-21 15:14:15 info: ✅ stripe_customer_id column ensured
+2025-07-21 15:14:15 info: Server running in development mode on port 8888
+2025-07-21 15:14:23 info: Database connection has been established successfully.
+2025-07-21 15:14:23 info: Database models loaded successfully.
+2025-07-21 15:14:23 info: Database tables created successfully.
+2025-07-21 15:14:23 info: Database models synchronized successfully.
+2025-07-21 15:14:23 info: ✅ stripe_customer_id column ensured
+2025-07-21 15:14:23 info: Server running in development mode on port 8888
+2025-07-21T09:48:32.975Z info: ADMIN_PRODUCT_ACTION
+2025-07-21 20:44:58 error: UNHANDLED REJECTION! 💥 Shutting down...
+2025-07-21 20:44:58 error: Error
+2025-07-21 21:08:42 info: Database connection has been established successfully.
+2025-07-21 21:08:42 info: Database models loaded successfully.
+2025-07-21 21:08:42 info: Database tables created successfully.
+2025-07-21 21:08:42 info: Database models synchronized successfully.
+2025-07-21 21:08:42 info: ✅ stripe_customer_id column ensured
+2025-07-21 21:08:42 info: Server running in development mode on port 8888
+2025-07-22T03:33:05.545Z info: ADMIN_PRODUCT_ACTION
+2025-07-22 10:47:18 info: Database connection has been established successfully.
+2025-07-22 10:47:18 info: Database models loaded successfully.
+2025-07-22 10:47:18 info: Database tables created successfully.
+2025-07-22 10:47:18 info: Database models synchronized successfully.
+2025-07-22 10:47:18 info: ✅ stripe_customer_id column ensured
+2025-07-22 10:47:18 info: Server running in development mode on port 8888
+2025-07-22 10:49:33 info: Database connection has been established successfully.
+2025-07-22 10:49:33 info: Database models loaded successfully.
+2025-07-22 10:49:33 info: Database tables synchronized successfully (preserving data).
+2025-07-22 10:49:33 info: ✅ stripe_customer_id column ensured
+2025-07-22 10:49:33 info: Server running in development mode on port 8888
+2025-07-22 11:30:20 info: Database connection has been established successfully.
+2025-07-22 11:30:20 info: Database models loaded successfully.
+2025-07-22 11:30:21 info: Database tables synchronized successfully (preserving data).
+2025-07-22 11:30:21 info: ✅ stripe_customer_id column ensured
+2025-07-22 11:30:21 info: Server running in development mode on port 8888
+2025-07-22T04:52:07.298Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T04:56:59.161Z info: ADMIN_PRODUCT_ACTION
+2025-07-22 12:10:45 info: Database connection has been established successfully.
+2025-07-22 12:10:45 info: Database models loaded successfully.
+2025-07-22 12:10:46 info: Database tables synchronized successfully (preserving data).
+2025-07-22 12:10:46 info: ✅ stripe_customer_id column ensured
+2025-07-22 12:10:46 info: Server running in development mode on port 8888
+2025-07-22 12:29:33 error: UNHANDLED REJECTION! 💥 Shutting down...
+2025-07-22 12:29:33 error: Error
+2025-07-22 12:35:05 info: Database connection has been established successfully.
+2025-07-22 12:35:05 info: Database models loaded successfully.
+2025-07-22 12:35:06 info: Database tables synchronized successfully (preserving data).
+2025-07-22 12:35:06 info: ✅ stripe_customer_id column ensured
+2025-07-22 12:35:06 info: Server running in development mode on port 8888
+2025-07-22 18:41:54 info: Database connection has been established successfully.
+2025-07-22 18:41:54 info: Database models loaded successfully.
+2025-07-22 18:41:54 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:41:54 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:41:54 info: Server running in development mode on port 8888
+2025-07-22 18:43:24 info: Database connection has been established successfully.
+2025-07-22 18:43:24 info: Database models loaded successfully.
+2025-07-22 18:43:24 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:43:24 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:43:24 info: Server running in development mode on port 8888
+2025-07-22 18:45:42 info: Database connection has been established successfully.
+2025-07-22 18:45:42 info: Database models loaded successfully.
+2025-07-22 18:45:42 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:45:42 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:45:42 info: Server running in development mode on port 8888
+2025-07-22 18:46:18 info: Database connection has been established successfully.
+2025-07-22 18:46:18 info: Database models loaded successfully.
+2025-07-22 18:46:19 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:46:19 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:46:19 info: Server running in development mode on port 8888
+2025-07-22 18:48:51 info: Database connection has been established successfully.
+2025-07-22 18:48:51 info: Database models loaded successfully.
+2025-07-22 18:48:51 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:48:51 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:48:51 info: Server running in development mode on port 8888
+2025-07-22 18:51:04 info: Database connection has been established successfully.
+2025-07-22 18:51:04 info: Database models loaded successfully.
+2025-07-22 18:51:04 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:51:04 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:51:04 info: Server running in development mode on port 8888
+2025-07-22 18:52:06 info: Database connection has been established successfully.
+2025-07-22 18:52:06 info: Database models loaded successfully.
+2025-07-22 18:52:07 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:52:07 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:52:07 info: Server running in development mode on port 8888
+2025-07-22 18:54:14 info: Database connection has been established successfully.
+2025-07-22 18:54:14 info: Database models loaded successfully.
+2025-07-22 18:54:15 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:54:15 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:54:15 info: Server running in development mode on port 8888
+2025-07-22 18:59:23 info: Database connection has been established successfully.
+2025-07-22 18:59:23 info: Database models loaded successfully.
+2025-07-22 18:59:24 info: Database tables synchronized successfully (preserving data).
+2025-07-22 18:59:24 info: ✅ stripe_customer_id column ensured
+2025-07-22 18:59:24 info: Server running in development mode on port 8888
+2025-07-22 19:04:12 info: Database connection has been established successfully.
+2025-07-22 19:04:12 info: Database models loaded successfully.
+2025-07-22 19:04:13 info: Database tables synchronized successfully (preserving data).
+2025-07-22 19:04:13 info: ✅ stripe_customer_id column ensured
+2025-07-22 19:04:13 info: Server running in development mode on port 8888
+2025-07-22T12:19:00.261Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T12:19:29.285Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T12:20:38.249Z info: ADMIN_PRODUCT_ACTION
+2025-07-22 19:22:32 info: Database connection has been established successfully.
+2025-07-22 19:22:32 info: Database models loaded successfully.
+2025-07-22 19:22:33 info: Database connection has been established successfully.
+2025-07-22 19:22:33 info: Database models loaded successfully.
+2025-07-22 19:22:34 info: Database tables synchronized successfully (preserving data).
+2025-07-22 19:22:34 info: ✅ stripe_customer_id column ensured
+2025-07-22 19:22:34 info: Server running in development mode on port 8888
+2025-07-22 19:22:34 info: Database tables synchronized successfully (preserving data).
+2025-07-22 19:22:34 info: ✅ stripe_customer_id column ensured
+2025-07-22T12:25:54.506Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:10:30.882Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:12:25.213Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:12:54.324Z info: ADMIN_PRODUCT_ACTION
+2025-07-22 20:16:46 info: Database connection has been established successfully.
+2025-07-22 20:16:46 info: Database models loaded successfully.
+2025-07-22 20:16:46 info: Database tables synchronized successfully (preserving data).
+2025-07-22 20:16:46 info: ✅ stripe_customer_id column ensured
+2025-07-22 20:16:46 info: Server running in development mode on port 8888
+2025-07-22T13:17:10.009Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:17:18.792Z info: ADMIN_PRODUCT_ACTION
+2025-07-22 20:19:24 info: Database connection has been established successfully.
+2025-07-22 20:19:24 info: Database models loaded successfully.
+2025-07-22 20:19:24 info: Database tables synchronized successfully (preserving data).
+2025-07-22 20:19:24 info: ✅ stripe_customer_id column ensured
+2025-07-22 20:19:24 info: Server running in development mode on port 8888
+2025-07-22T13:19:38.968Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:20:52.879Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:22:10.614Z info: ADMIN_PRODUCT_ACTION
+2025-07-22 20:25:43 info: Database connection has been established successfully.
+2025-07-22 20:25:43 info: Database models loaded successfully.
+2025-07-22 20:25:44 info: Database tables synchronized successfully (preserving data).
+2025-07-22 20:25:44 info: ✅ stripe_customer_id column ensured
+2025-07-22 20:25:44 info: Server running in development mode on port 8888
+2025-07-22T13:25:44.801Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:45:59.774Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:51:16.596Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:55:08.967Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:55:57.007Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:56:07.872Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:56:32.746Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:56:42.319Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:56:50.529Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:57:20.729Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:57:33.122Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:57:53.921Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:58:04.553Z info: ADMIN_PRODUCT_ACTION
+2025-07-22T13:58:25.138Z info: ADMIN_PRODUCT_ACTION
+2025-07-22 21:03:37 info: Database connection has been established successfully.
+2025-07-22 21:03:37 info: Database models loaded successfully.
+2025-07-22 21:03:37 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:03:37 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:03:37 info: Server running in development mode on port 8888
+2025-07-22 21:03:37 info: Database connection has been established successfully.
+2025-07-22 21:03:37 info: Database models loaded successfully.
+2025-07-22 21:03:38 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:03:38 info: ✅ stripe_customer_id column ensured
+2025-07-22T14:06:11.613Z info: ADMIN_PRODUCT_ACTION
+2025-07-22 21:07:41 info: Database connection has been established successfully.
+2025-07-22 21:07:41 info: Database models loaded successfully.
+2025-07-22 21:07:41 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:07:41 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:07:41 info: Server running in development mode on port 8888
+2025-07-22 21:08:55 info: Database connection has been established successfully.
+2025-07-22 21:08:55 info: Database models loaded successfully.
+2025-07-22 21:08:55 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:08:55 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:08:55 info: Server running in development mode on port 8888
+2025-07-22 21:08:56 info: Database connection has been established successfully.
+2025-07-22 21:08:56 info: Database models loaded successfully.
+2025-07-22 21:08:57 info: Database connection has been established successfully.
+2025-07-22 21:08:57 info: Database models loaded successfully.
+2025-07-22 21:08:58 info: Database connection has been established successfully.
+2025-07-22 21:08:58 info: Database models loaded successfully.
+2025-07-22 21:08:59 info: Database connection has been established successfully.
+2025-07-22 21:08:59 info: Database models loaded successfully.
+2025-07-22 21:09:00 info: Database connection has been established successfully.
+2025-07-22 21:09:00 info: Database models loaded successfully.
+2025-07-22 21:09:00 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:09:00 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:09:00 info: Server running in development mode on port 8888
+2025-07-22 21:11:14 info: Database connection has been established successfully.
+2025-07-22 21:11:14 info: Database models loaded successfully.
+2025-07-22 21:11:15 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:11:15 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:11:15 info: Server running in development mode on port 8888
+2025-07-22 21:11:20 info: Database connection has been established successfully.
+2025-07-22 21:11:20 info: Database models loaded successfully.
+2025-07-22 21:11:20 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:11:20 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:11:20 info: Server running in development mode on port 8888
+2025-07-22 21:11:21 info: Database connection has been established successfully.
+2025-07-22 21:11:21 info: Database models loaded successfully.
+2025-07-22 21:11:22 info: Database connection has been established successfully.
+2025-07-22 21:11:22 info: Database models loaded successfully.
+2025-07-22 21:11:23 info: Database connection has been established successfully.
+2025-07-22 21:11:23 info: Database models loaded successfully.
+2025-07-22 21:11:24 info: Database connection has been established successfully.
+2025-07-22 21:11:24 info: Database models loaded successfully.
+2025-07-22 21:11:25 info: Database connection has been established successfully.
+2025-07-22 21:11:25 info: Database models loaded successfully.
+2025-07-22 21:11:25 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:11:25 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:11:25 info: Server running in development mode on port 8888
+2025-07-22 21:11:28 info: Database connection has been established successfully.
+2025-07-22 21:11:28 info: Database models loaded successfully.
+2025-07-22 21:11:29 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:11:29 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:11:29 info: Server running in development mode on port 8888
+2025-07-22 21:11:30 info: Database connection has been established successfully.
+2025-07-22 21:11:30 info: Database models loaded successfully.
+2025-07-22 21:11:31 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:11:31 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:11:31 info: Server running in development mode on port 8888
+2025-07-22 21:11:32 info: Database connection has been established successfully.
+2025-07-22 21:11:32 info: Database models loaded successfully.
+2025-07-22 21:11:32 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:11:32 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:11:32 info: Server running in development mode on port 8888
+2025-07-22 21:11:34 info: Database connection has been established successfully.
+2025-07-22 21:11:34 info: Database models loaded successfully.
+2025-07-22 21:11:35 info: Database connection has been established successfully.
+2025-07-22 21:11:35 info: Database models loaded successfully.
+2025-07-22 21:11:36 info: Database connection has been established successfully.
+2025-07-22 21:11:36 info: Database models loaded successfully.
+2025-07-22 21:11:36 info: Database tables synchronized successfully (preserving data).
+2025-07-22 21:11:36 info: ✅ stripe_customer_id column ensured
+2025-07-22 21:11:36 info: Server running in development mode on port 8888
+2025-11-12 10:26:28 info: Database connection has been established successfully.
+2025-11-12 10:26:28 info: Database models loaded successfully.
+2025-11-12 10:26:28 info: Database tables synchronized successfully (preserving data).
+2025-11-12 10:26:28 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:26:28 info: Server running in development mode on port 8888
+2025-11-12 10:27:56 error: Unable to connect to the database: role "shopdbuser" does not exist
+2025-11-12 10:28:57 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-11-12 10:28:57 info: 💥 Process terminated!
+2025-11-12 10:29:02 info: Database connection has been established successfully.
+2025-11-12 10:29:02 info: Database models loaded successfully.
+2025-11-12 10:29:02 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:29:02 info: Server running in production mode on port 8888
+2025-11-12 10:35:51 info: Database connection has been established successfully.
+2025-11-12 10:35:51 info: Database models loaded successfully.
+2025-11-12 10:35:51 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:35:51 info: Server running in production mode on port 8888
+2025-11-12 10:37:05 info: Database connection has been established successfully.
+2025-11-12 10:37:05 info: Database models loaded successfully.
+2025-11-12 10:37:05 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:37:05 info: Server running in production mode on port 8888
+2025-11-12 10:37:13 info: Database connection has been established successfully.
+2025-11-12 10:37:13 info: Database models loaded successfully.
+2025-11-12 10:37:13 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:37:13 info: Server running in production mode on port 8888
+2025-11-12 10:37:27 info: Database connection has been established successfully.
+2025-11-12 10:37:27 info: Database models loaded successfully.
+2025-11-12 10:37:27 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:37:55 info: Database connection has been established successfully.
+2025-11-12 10:37:55 info: Database models loaded successfully.
+2025-11-12 10:37:55 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:37:55 info: Server running in production mode on port 8888
+2025-11-12 10:42:19 info: Database connection has been established successfully.
+2025-11-12 10:42:19 info: Database models loaded successfully.
+2025-11-12 10:42:19 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:42:25 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-11-12 10:42:25 info: 💥 Process terminated!
+2025-11-12 10:42:25 info: 👋 SIGTERM RECEIVED. Shutting down gracefully
+2025-11-12 10:42:25 info: 💥 Process terminated!
+2025-11-12 10:42:29 info: Database connection has been established successfully.
+2025-11-12 10:42:29 info: Database models loaded successfully.
+2025-11-12 10:42:29 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:42:29 info: Server running in production mode on port 8888
+2025-11-12 10:42:52 info: Database connection has been established successfully.
+2025-11-12 10:42:52 info: Database models loaded successfully.
+2025-11-12 10:42:52 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:43:11 info: Database connection has been established successfully.
+2025-11-12 10:43:11 info: Database models loaded successfully.
+2025-11-12 10:43:11 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:43:11 info: Server running in production mode on port 8888
+2025-11-12 10:43:33 info: Database connection has been established successfully.
+2025-11-12 10:43:33 info: Database models loaded successfully.
+2025-11-12 10:43:33 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:43:33 info: Server running in production mode on port 8888
+2025-11-12 10:44:28 info: Database connection has been established successfully.
+2025-11-12 10:44:28 info: Database models loaded successfully.
+2025-11-12 10:44:28 info: ✅ stripe_customer_id column ensured
+2025-11-12 10:44:28 info: Server running in production mode on port 8888
+2025-12-11 15:29:23 error: Unable to connect to the database: role "shopdbuser" does not exist
+2025-12-11 15:31:30 info: Database connection has been established successfully.
+2025-12-11 15:31:30 info: Database models loaded successfully.
+2025-12-11 15:31:30 info: ✅ stripe_customer_id column ensured
+2025-12-11 15:31:36 info: Database connection has been established successfully.
+2025-12-11 15:31:36 info: Database models loaded successfully.
+2025-12-11 15:31:36 info: ✅ stripe_customer_id column ensured
+2025-12-11 15:32:25 info: Database connection has been established successfully.
+2025-12-11 15:32:25 info: Database models loaded successfully.
+2025-12-11 15:32:25 info: ✅ stripe_customer_id column ensured
+2025-12-11 15:32:25 info: Server running in development mode on port 8888
+2025-12-11 15:33:45 info: Database connection has been established successfully.
+2025-12-11 15:33:45 info: Database models loaded successfully.
+2025-12-11 15:33:45 info: ✅ stripe_customer_id column ensured
+2025-12-11 15:33:45 info: Server running in development mode on port 8888
+2025-12-11 15:35:31 info: Database connection has been established successfully.
+2025-12-11 15:35:31 info: Database models loaded successfully.
+2025-12-11 15:35:31 info: ✅ stripe_customer_id column ensured
+2025-12-11 15:35:31 info: Server running in development mode on port 8888
+2025-12-11 15:36:08 info: Database connection has been established successfully.
+2025-12-11 15:36:08 info: Database models loaded successfully.
+2025-12-11 15:36:08 info: ✅ stripe_customer_id column ensured
+2025-12-11 15:36:08 info: Server running in development mode on port 8888
+2025-12-18 09:39:59 info: Database connection has been established successfully.
+2025-12-18 09:39:59 info: Database models loaded successfully.
+2025-12-18 09:39:59 info: ✅ stripe_customer_id column ensured
+2025-12-18 09:39:59 info: Server running in development mode on port 8888
+2025-12-18 09:53:02 info: Database connection has been established successfully.
+2025-12-18 09:53:02 info: Database models loaded successfully.
+2025-12-18 09:53:02 info: ✅ stripe_customer_id column ensured
+2025-12-18 09:53:02 info: Server running in development mode on port 8888
+2025-12-18 09:53:30 info: Database connection has been established successfully.
+2025-12-18 09:53:30 info: Database models loaded successfully.
+2025-12-18 09:53:30 info: ✅ stripe_customer_id column ensured
+2025-12-18 09:53:30 info: Server running in development mode on port 8888
+2025-12-18 09:53:56 info: Database connection has been established successfully.
+2025-12-18 09:53:56 info: Database models loaded successfully.
+2025-12-18 09:53:56 info: ✅ stripe_customer_id column ensured
+2025-12-18 09:53:56 info: Server running in development mode on port 8888
+2025-12-18 09:54:16 info: Database connection has been established successfully.
+2025-12-18 09:54:16 info: Database models loaded successfully.
+2025-12-18 09:54:16 info: ✅ stripe_customer_id column ensured
+2025-12-18 09:54:16 info: Server running in development mode on port 8888
+2025-12-18 09:54:38 info: Database connection has been established successfully.
+2025-12-18 09:54:38 info: Database models loaded successfully.
+2025-12-18 09:54:38 info: ✅ stripe_customer_id column ensured
+2025-12-18 09:54:38 info: Server running in development mode on port 8888
+2025-12-18 09:58:57 info: Database connection has been established successfully.
+2025-12-18 09:58:57 info: Database models loaded successfully.
+2025-12-18 09:58:57 info: ✅ stripe_customer_id column ensured
+2025-12-18 09:58:57 info: Server running in development mode on port 8888
+2025-12-18 09:59:46 info: Database connection has been established successfully.
+2025-12-18 09:59:46 info: Database models loaded successfully.
+2025-12-18 09:59:46 info: ✅ stripe_customer_id column ensured
+2025-12-18 09:59:46 info: Server running in development mode on port 8888
+2025-12-18 10:00:03 info: Database connection has been established successfully.
+2025-12-18 10:00:03 info: Database models loaded successfully.
+2025-12-18 10:00:03 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:00:03 info: Server running in development mode on port 8888
+2025-12-18 10:12:35 info: Database connection has been established successfully.
+2025-12-18 10:12:35 info: Database models loaded successfully.
+2025-12-18 10:12:35 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:12:35 info: Server running in development mode on port 8888
+2025-12-18 10:12:43 info: Database connection has been established successfully.
+2025-12-18 10:12:43 info: Database models loaded successfully.
+2025-12-18 10:12:43 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:12:43 info: Server running in development mode on port 8888
+2025-12-18 10:24:51 info: Database connection has been established successfully.
+2025-12-18 10:24:51 info: Database models loaded successfully.
+2025-12-18 10:24:51 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:24:51 info: Server running in development mode on port 8888
+2025-12-18 10:25:03 info: Database connection has been established successfully.
+2025-12-18 10:25:03 info: Database models loaded successfully.
+2025-12-18 10:25:03 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:25:03 info: Server running in development mode on port 8888
+2025-12-18 10:25:18 info: Database connection has been established successfully.
+2025-12-18 10:25:18 info: Database models loaded successfully.
+2025-12-18 10:25:18 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:25:18 info: Server running in development mode on port 8888
+2025-12-18 10:25:33 info: Database connection has been established successfully.
+2025-12-18 10:25:33 info: Database models loaded successfully.
+2025-12-18 10:25:33 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:25:33 info: Server running in development mode on port 8888
+2025-12-18 10:28:06 info: Database connection has been established successfully.
+2025-12-18 10:28:06 info: Database models loaded successfully.
+2025-12-18 10:28:06 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:28:06 info: Server running in development mode on port 8888
+2025-12-18 10:31:29 info: Database connection has been established successfully.
+2025-12-18 10:31:29 info: Database models loaded successfully.
+2025-12-18 10:31:29 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:31:29 info: Server running in development mode on port 8888
+2025-12-18 10:32:27 info: Database connection has been established successfully.
+2025-12-18 10:32:27 info: Database models loaded successfully.
+2025-12-18 10:32:27 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:32:27 info: Server running in development mode on port 8888
+2025-12-18 10:33:01 info: Database connection has been established successfully.
+2025-12-18 10:33:01 info: Database models loaded successfully.
+2025-12-18 10:33:01 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:33:01 info: Server running in development mode on port 8888
+2025-12-18 10:33:21 info: Database connection has been established successfully.
+2025-12-18 10:33:21 info: Database models loaded successfully.
+2025-12-18 10:33:21 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:33:21 info: Server running in development mode on port 8888
+2025-12-18 10:33:38 info: Database connection has been established successfully.
+2025-12-18 10:33:38 info: Database models loaded successfully.
+2025-12-18 10:33:38 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:33:38 info: Server running in development mode on port 8888
+2025-12-18 10:34:33 info: Database connection has been established successfully.
+2025-12-18 10:34:33 info: Database models loaded successfully.
+2025-12-18 10:34:33 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:34:33 info: Server running in development mode on port 8888
+2025-12-18 10:44:16 info: Database connection has been established successfully.
+2025-12-18 10:44:16 info: Database models loaded successfully.
+2025-12-18 10:44:16 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:44:16 info: Server running in development mode on port 8888
+2025-12-18 10:46:10 info: Database connection has been established successfully.
+2025-12-18 10:46:10 info: Database models loaded successfully.
+2025-12-18 10:46:10 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:46:10 info: Server running in development mode on port 8888
+2025-12-18 10:46:23 info: Database connection has been established successfully.
+2025-12-18 10:46:23 info: Database models loaded successfully.
+2025-12-18 10:46:23 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:46:23 info: Server running in development mode on port 8888
+2025-12-18 10:46:37 info: Database connection has been established successfully.
+2025-12-18 10:46:37 info: Database models loaded successfully.
+2025-12-18 10:46:37 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:46:37 info: Server running in development mode on port 8888
+2025-12-18 10:56:22 info: Database connection has been established successfully.
+2025-12-18 10:56:22 info: Database models loaded successfully.
+2025-12-18 10:56:22 info: ✅ stripe_customer_id column ensured
+2025-12-18 10:56:22 info: Server running in development mode on port 8888
+2025-12-18 11:17:42 info: Database connection has been established successfully.
+2025-12-18 11:17:42 info: Database models loaded successfully.
+2025-12-18 11:17:42 info: ✅ stripe_customer_id column ensured
+2025-12-18 11:17:42 info: Server running in development mode on port 8888
+2025-12-18 13:18:17 info: Database connection has been established successfully.
+2025-12-18 13:18:17 info: Database models loaded successfully.
+2025-12-18 13:18:17 info: ✅ stripe_customer_id column ensured
+2025-12-18 13:18:17 info: Server running in development mode on port 8888
+2025-12-18 13:18:30 info: Database connection has been established successfully.
+2025-12-18 13:18:30 info: Database models loaded successfully.
+2025-12-18 13:18:30 info: ✅ stripe_customer_id column ensured
+2025-12-18 13:18:30 info: Server running in development mode on port 8888
+2025-12-18 14:17:56 info: Database connection has been established successfully.
+2025-12-18 14:17:56 info: Database models loaded successfully.
+2025-12-18 14:17:56 info: ✅ stripe_customer_id column ensured
+2025-12-18 14:17:56 info: Server running in development mode on port 8888
+2025-12-18 14:18:05 info: Database connection has been established successfully.
+2025-12-18 14:18:05 info: Database models loaded successfully.
+2025-12-18 14:18:05 info: ✅ stripe_customer_id column ensured
+2025-12-18 14:18:05 info: Server running in development mode on port 8888
+2025-12-18 14:18:48 info: Database connection has been established successfully.
+2025-12-18 14:18:48 info: Database models loaded successfully.
+2025-12-18 14:18:48 info: ✅ stripe_customer_id column ensured
+2025-12-18 14:18:48 info: Server running in development mode on port 8888
+2025-12-18 14:19:06 info: Database connection has been established successfully.
+2025-12-18 14:19:06 info: Database models loaded successfully.
+2025-12-18 14:19:06 info: ✅ stripe_customer_id column ensured
+2025-12-18 14:19:06 info: Server running in development mode on port 8888
+2025-12-18 14:20:14 info: Database connection has been established successfully.
+2025-12-18 14:20:14 info: Database models loaded successfully.
+2025-12-18 14:20:14 info: ✅ stripe_customer_id column ensured
+2025-12-18 14:20:14 info: Server running in development mode on port 8888
+2025-12-18 14:22:37 info: Database connection has been established successfully.
+2025-12-18 14:22:37 info: Database models loaded successfully.
+2025-12-18 14:22:37 info: ✅ stripe_customer_id column ensured
+2025-12-18 14:22:37 info: Server running in development mode on port 8888
+2025-12-24 09:34:33 info: Database connection has been established successfully.
+2025-12-24 09:34:33 info: Database models loaded successfully.
+2025-12-24 09:34:33 info: ✅ stripe_customer_id column ensured
+2025-12-24 09:34:33 info: Server running in development mode on port 8888
+2025-12-24 09:37:16 info: Database connection has been established successfully.
+2025-12-24 09:37:16 info: Database models loaded successfully.
+2025-12-24 09:37:16 info: ✅ stripe_customer_id column ensured
+2025-12-24 09:37:16 info: Server running in development mode on port 8888
+2025-12-24 09:50:17 info: Database connection has been established successfully.
+2025-12-24 09:50:17 info: Database models loaded successfully.
+2025-12-24 09:50:17 info: ✅ stripe_customer_id column ensured
+2025-12-24 09:50:17 info: Server running in development mode on port 8888
+2025-12-24 09:50:23 info: Database connection has been established successfully.
+2025-12-24 09:50:23 info: Database models loaded successfully.
+2025-12-24 09:50:23 info: ✅ stripe_customer_id column ensured
+2025-12-24 09:50:23 info: Server running in development mode on port 8888
+2025-12-24T03:04:54.722Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:05:27.846Z info: ADMIN_PRODUCT_ACTION
+2025-12-24 10:06:06 info: Database connection has been established successfully.
+2025-12-24 10:06:06 info: Database models loaded successfully.
+2025-12-24 10:06:06 info: ✅ stripe_customer_id column ensured
+2025-12-24 10:06:06 info: Server running in development mode on port 8888
+2025-12-24 10:06:12 info: Database connection has been established successfully.
+2025-12-24 10:06:12 info: Database models loaded successfully.
+2025-12-24 10:06:12 info: ✅ stripe_customer_id column ensured
+2025-12-24 10:06:12 info: Server running in development mode on port 8888
+2025-12-24T03:14:21.898Z info: ADMIN_PRODUCT_ACTION
+2025-12-24 10:15:12 info: Database connection has been established successfully.
+2025-12-24 10:15:12 info: Database models loaded successfully.
+2025-12-24 10:15:12 info: ✅ stripe_customer_id column ensured
+2025-12-24 10:15:12 info: Server running in development mode on port 8888
+2025-12-24T03:23:50.120Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:23:50.949Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:23:52.286Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:23:52.994Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:23:53.698Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:24:01.440Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:29:14.109Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:29:15.391Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:29:17.412Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:29:21.254Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:29:22.364Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:29:23.701Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:30:06.039Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:30:07.306Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T03:30:08.608Z info: ADMIN_PRODUCT_ACTION
+2025-12-24 10:57:03 info: Database connection has been established successfully.
+2025-12-24 10:57:03 info: Database models loaded successfully.
+2025-12-24 10:57:03 info: ✅ stripe_customer_id column ensured
+2025-12-24 10:57:03 info: Server running in development mode on port 8888
+2025-12-24 11:00:43 info: Database connection has been established successfully.
+2025-12-24 11:00:43 info: Database models loaded successfully.
+2025-12-24 11:00:43 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:00:43 info: Server running in development mode on port 8888
+2025-12-24 11:07:15 info: Database connection has been established successfully.
+2025-12-24 11:07:15 info: Database models loaded successfully.
+2025-12-24 11:07:15 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:07:15 info: Server running in development mode on port 8888
+2025-12-24 11:07:28 info: Database connection has been established successfully.
+2025-12-24 11:07:28 info: Database models loaded successfully.
+2025-12-24 11:07:28 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:07:28 info: Server running in development mode on port 8888
+2025-12-24 11:07:56 info: Database connection has been established successfully.
+2025-12-24 11:07:56 info: Database models loaded successfully.
+2025-12-24 11:07:56 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:07:56 info: Server running in development mode on port 8888
+2025-12-24 11:14:06 info: Database connection has been established successfully.
+2025-12-24 11:14:06 info: Database models loaded successfully.
+2025-12-24 11:14:06 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:14:06 info: Server running in development mode on port 8888
+2025-12-24 11:14:21 info: Database connection has been established successfully.
+2025-12-24 11:14:21 info: Database models loaded successfully.
+2025-12-24 11:14:21 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:14:21 info: Server running in development mode on port 8888
+2025-12-24 11:14:40 info: Database connection has been established successfully.
+2025-12-24 11:14:40 info: Database models loaded successfully.
+2025-12-24 11:14:40 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:14:40 info: Server running in development mode on port 8888
+2025-12-24 11:24:58 info: Database connection has been established successfully.
+2025-12-24 11:24:58 info: Database models loaded successfully.
+2025-12-24 11:24:58 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:24:58 info: Server running in development mode on port 8888
+2025-12-24 11:25:05 info: Database connection has been established successfully.
+2025-12-24 11:25:05 info: Database models loaded successfully.
+2025-12-24 11:25:05 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:25:05 info: Server running in development mode on port 8888
+2025-12-24 11:25:19 info: Database connection has been established successfully.
+2025-12-24 11:25:19 info: Database models loaded successfully.
+2025-12-24 11:25:19 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:25:19 info: Server running in development mode on port 8888
+2025-12-24 11:25:31 info: Database connection has been established successfully.
+2025-12-24 11:25:31 info: Database models loaded successfully.
+2025-12-24 11:25:31 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:25:31 info: Server running in development mode on port 8888
+2025-12-24 11:25:36 info: Database connection has been established successfully.
+2025-12-24 11:25:36 info: Database models loaded successfully.
+2025-12-24 11:25:36 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:25:36 info: Server running in development mode on port 8888
+2025-12-24 11:25:46 info: Database connection has been established successfully.
+2025-12-24 11:25:46 info: Database models loaded successfully.
+2025-12-24 11:25:46 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:25:46 info: Server running in development mode on port 8888
+2025-12-24 11:33:52 info: Database connection has been established successfully.
+2025-12-24 11:33:52 info: Database models loaded successfully.
+2025-12-24 11:33:52 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:33:52 info: Server running in development mode on port 8888
+2025-12-24 11:34:09 info: Database connection has been established successfully.
+2025-12-24 11:34:09 info: Database models loaded successfully.
+2025-12-24 11:34:09 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:34:09 info: Server running in development mode on port 8888
+2025-12-24 11:34:36 info: Database connection has been established successfully.
+2025-12-24 11:34:36 info: Database models loaded successfully.
+2025-12-24 11:34:36 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:34:36 info: Server running in development mode on port 8888
+2025-12-24 11:44:27 info: Database connection has been established successfully.
+2025-12-24 11:44:27 info: Database models loaded successfully.
+2025-12-24 11:44:27 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:44:27 info: Server running in development mode on port 8888
+2025-12-24 11:45:57 info: Database connection has been established successfully.
+2025-12-24 11:45:57 info: Database models loaded successfully.
+2025-12-24 11:45:57 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:45:57 info: Server running in development mode on port 8888
+2025-12-24 11:46:24 info: Database connection has been established successfully.
+2025-12-24 11:46:24 info: Database models loaded successfully.
+2025-12-24 11:46:24 info: ✅ stripe_customer_id column ensured
+2025-12-24 11:46:24 info: Server running in development mode on port 8888
+2025-12-24 13:10:50 info: Database connection has been established successfully.
+2025-12-24 13:10:50 info: Database models loaded successfully.
+2025-12-24 13:10:50 info: ✅ stripe_customer_id column ensured
+2025-12-24 13:10:50 info: Server running in development mode on port 8888
+2025-12-24 13:59:59 info: Database connection has been established successfully.
+2025-12-24 13:59:59 info: Database models loaded successfully.
+2025-12-24 13:59:59 info: ✅ stripe_customer_id column ensured
+2025-12-24 13:59:59 info: Server running in development mode on port 8888
+2025-12-24 14:00:21 info: Database connection has been established successfully.
+2025-12-24 14:00:21 info: Database models loaded successfully.
+2025-12-24 14:00:21 info: ✅ stripe_customer_id column ensured
+2025-12-24 14:00:21 info: Server running in development mode on port 8888
+2025-12-24T07:09:18.536Z info: ADMIN_PRODUCT_ACTION
+2025-12-24T07:10:31.264Z info: ADMIN_PRODUCT_ACTION
+2026-01-04 20:21:40 info: Database connection has been established successfully.
+2026-01-04 20:21:40 info: Database models loaded successfully.
+2026-01-04 20:21:40 info: ✅ stripe_customer_id column ensured
+2026-01-04 20:21:40 info: Server running in development mode on port 8888
+2026-01-04 20:43:50 info: Database connection has been established successfully.
+2026-01-04 20:43:50 info: Database models loaded successfully.
+2026-01-04 20:43:50 info: ✅ stripe_customer_id column ensured
+2026-01-04 20:43:50 info: Server running in development mode on port 8888
+2026-01-04 20:43:59 info: Database connection has been established successfully.
+2026-01-04 20:43:59 info: Database models loaded successfully.
+2026-01-04 20:43:59 info: ✅ stripe_customer_id column ensured
+2026-01-04 20:43:59 info: Server running in development mode on port 8888
+2026-01-04 20:50:40 info: Database connection has been established successfully.
+2026-01-04 20:50:40 info: Database models loaded successfully.
+2026-01-04 20:50:40 info: ✅ stripe_customer_id column ensured
+2026-01-04 20:50:40 info: Server running in development mode on port 8888
+2026-01-04 20:51:24 info: Database connection has been established successfully.
+2026-01-04 20:51:24 info: Database models loaded successfully.
+2026-01-04 20:51:24 info: ✅ stripe_customer_id column ensured
+2026-01-04 20:51:24 info: Server running in development mode on port 8888
+2026-01-05 09:57:45 info: Database connection has been established successfully.
+2026-01-05 09:57:45 info: Database models loaded successfully.
+2026-01-05 09:57:45 info: ✅ stripe_customer_id column ensured
+2026-01-05 09:57:45 info: Server running in development mode on port 8888
+2026-01-05 10:04:05 info: Database connection has been established successfully.
+2026-01-05 10:04:05 info: Database models loaded successfully.
+2026-01-05 10:04:05 info: ✅ stripe_customer_id column ensured
+2026-01-05 10:04:05 info: Server running in development mode on port 8888
+2026-01-05 10:04:33 info: Database connection has been established successfully.
+2026-01-05 10:04:33 info: Database models loaded successfully.
+2026-01-05 10:04:33 info: ✅ stripe_customer_id column ensured
+2026-01-05 10:04:33 info: Server running in development mode on port 8888
+2026-01-05 10:31:15 info: Database connection has been established successfully.
+2026-01-05 10:31:15 info: Database models loaded successfully.
+2026-01-05 10:31:15 info: ✅ stripe_customer_id column ensured
+2026-01-05 10:31:15 info: Server running in development mode on port 8888
+2026-01-05 10:32:59 info: Database connection has been established successfully.
+2026-01-05 10:32:59 info: Database models loaded successfully.
+2026-01-05 10:32:59 info: ✅ stripe_customer_id column ensured
+2026-01-05 10:32:59 info: Server running in development mode on port 8888
+2026-01-05 10:44:07 info: Database connection has been established successfully.
+2026-01-05 10:44:07 info: Database models loaded successfully.
+2026-01-05 10:44:07 info: ✅ stripe_customer_id column ensured
+2026-01-05 10:44:07 info: Server running in development mode on port 8888
+2026-01-05 10:45:03 info: Database connection has been established successfully.
+2026-01-05 10:45:03 info: Database models loaded successfully.
+2026-01-05 10:45:03 info: ✅ stripe_customer_id column ensured
+2026-01-05 10:45:03 info: Server running in development mode on port 8888
+2026-01-05 10:45:21 info: Database connection has been established successfully.
+2026-01-05 10:45:21 info: Database models loaded successfully.
+2026-01-05 10:45:21 info: ✅ stripe_customer_id column ensured
+2026-01-05 10:45:21 info: Server running in development mode on port 8888
+2026-01-05 10:56:34 info: Database connection has been established successfully.
+2026-01-05 10:56:34 info: Database models loaded successfully.
+2026-01-05 10:56:34 info: ✅ stripe_customer_id column ensured
+2026-01-05 10:56:34 info: Server running in development mode on port 8888
