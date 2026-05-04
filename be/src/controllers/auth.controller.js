@@ -358,9 +358,61 @@ const getCurrentUser = async (req, res, next) => {
     next(error);
   }
 };
+const registerSeller = async (req, res, next) => {
+  try {
+    const {
+      name,
+      email,
+      password,
+      shopName,
+      shopPhone,
+      shopAddress,
+      shopDescription,
+    } = req.body;
 
+    if (!name || !email || !password || !shopName || !shopPhone || !shopAddress) {
+      throw new AppError('Vui lòng nhập đầy đủ thông tin đăng ký seller', 400);
+    }
+
+    const existingUser = await User.findOne({ where: { email } });
+
+    if (existingUser) {
+      throw new AppError('Email đã được sử dụng', 400);
+    }
+
+    const nameParts = name.trim().split(' ');
+    const firstName = nameParts.pop() || name;
+    const lastName = nameParts.join(' ') || 'Seller';
+
+    const user = await User.create({
+      email,
+      password,
+      firstName,
+      lastName,
+      phone: shopPhone,
+      role: 'customer',
+      seller_status: 'pending',
+      shop_name: shopName,
+      shop_phone: shopPhone,
+      shop_address: shopAddress,
+      shop_description: shopDescription,
+      isEmailVerified: true,
+      verificationToken: null,
+    });
+
+    res.status(201).json({
+      status: 'success',
+      message:
+        'Đăng ký Seller thành công. Tài khoản của bạn đang chờ admin duyệt.',
+      user: user.toJSON(),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   register,
+   registerSeller,
   login,
   logout,
   verifyEmail,

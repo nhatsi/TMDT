@@ -8,7 +8,7 @@ const {
 } = require('../models');
 const { AppError } = require('../middlewares/errorHandler');
 const { Op } = require('sequelize');
-
+const { trackUserBehavior } = require('../services/userBehavior.service');
 // Create review
 const createReview = async (req, res, next) => {
   try {
@@ -81,16 +81,28 @@ const createReview = async (req, res, next) => {
     const avgRating =
       productReviews.reduce((sum, review) => sum + review.rating, 0) /
       productReviews.length;
+await product.update({
+  rating: avgRating,
+  reviewCount: productReviews.length,
+});
 
-    await product.update({
-      rating: avgRating,
-      reviewCount: productReviews.length,
-    });
+if (Number(rating) >= 4) {
+  await trackUserBehavior({
+    userId,
+    productId,
+    actionType: 'review',
+    metadata: {
+      rating: Number(rating),
+      reviewId: review.id,
+      title: title || null,
+    },
+  });
+}
 
-    res.status(201).json({
-      status: 'success',
-      data: createdReview,
-    });
+res.status(201).json({
+  status: 'success',
+  data: createdReview,
+});
   } catch (error) {
     next(error);
   }

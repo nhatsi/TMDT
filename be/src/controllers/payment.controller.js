@@ -1,31 +1,124 @@
 const stripeService = require('../services/payment/stripeService');
-const { Order, User, OrderItem, Product, ProductVariant, Cart, CartItem } = require('../models');
+const {
+  Order,
+  User,
+  OrderItem,
+  Product,
+  ProductVariant,
+  Cart,
+  CartItem,
+} = require('../models');
 const { AppError } = require('../middlewares/errorHandler');
 const { Op } = require('sequelize');
-const sequelize = require('../config/sequelize');
+
+// Helper: parse orderIds from Stripe metadata
+const parseOrderIdsFromPaymentIntent = (paymentIntent) => {
+  if (paymentIntent.metadata && paymentIntent.metadata.orderIds) {
+    try {
+      const parsed = JSON.parse(paymentIntent.metadata.orderIds);
+
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    } catch (error) {
+      console.error('Cannot parse orderIds metadata:', error);
+    }
+  }
+
+  if (paymentIntent.metadata && paymentIntent.metadata.orderId) {
+    return [paymentIntent.metadata.orderId];
+  }
+
+  return [];
+};
+
+// Helper: reduce inventory for multiple orders
+const reduceInventoryForOrders = async (orderIds) => {
+  if (!orderIds || orderIds.length === 0) {
+    return;
+  }
+
+  const orderItems = await OrderItem.findAll({
+    where: {
+      orderId: orderIds,
+    },
+  });
+
+  for (const item of orderItems) {
+    if (item.variantId) {
+      await ProductVariant.decrement(
+        { stockQuantity: item.quantity },
+        { where: { id: item.variantId } }
+      );
+    } else {
+      await Product.decrement(
+        { stockQuantity: item.quantity },
+        { where: { id: item.productId } }
+      );
+
+      const product = await Product.findByPk(item.productId);
+      if (product && product.stockQuantity <= 0) {
+        await product.update({ inStock: false });
+      }
+    }
+  }
+};
+
+// Helper: clear user cart after successful payment
+const clearUserCart = async (userId) => {
+  try {
+    const cart = await Cart.findOne({
+      where: { userId, status: 'active' },
+    });
+
+    if (cart) {
+      await cart.update({ status: 'converted' });
+
+      await CartItem.destroy({
+        where: { cartId: cart.id },
+      });
+
+      console.log(`Cart cleared for user ${userId}`);
+    }
+  } catch (error) {
+    console.error(`Error clearing cart for user ${userId}:`, error);
+  }
+};
 
 // Create payment intent
 const createPaymentIntent = async (req, res, next) => {
   try {
-    const { amount, currency = 'usd', orderId } = req.body;
+    const { amount, currency = 'usd', orderId, orderIds } = req.body;
     const userId = req.user.id;
 
     if (!amount || amount <= 0) {
       throw new AppError('Invalid amount', 400);
     }
 
-    // Create payment intent with metadata
+    const normalizedOrderIds =
+      Array.isArray(orderIds) && orderIds.length > 0
+        ? orderIds
+        : orderId
+          ? [orderId]
+          : [];
+
     console.log('Creating payment intent with metadata:', {
       userId,
       orderId: orderId || '',
+      orderIds: normalizedOrderIds,
     });
 
     const paymentIntent = await stripeService.createPaymentIntent({
       amount,
       currency,
       metadata: {
-        userId,
-        orderId: orderId || '',
+        userId: String(userId),
+        orderId: normalizedOrderIds[0]
+          ? String(normalizedOrderIds[0])
+          : orderId
+            ? String(orderId)
+            : '',
+        orderIds: JSON.stringify(normalizedOrderIds),
       },
     });
 
@@ -61,95 +154,72 @@ const confirmPayment = async (req, res, next) => {
       metadata: paymentIntent.metadata,
     });
 
-    // Update order payment status if orderId exists in metadata
-    if (paymentIntent.metadata.orderId) {
-      console.log('Updating order:', paymentIntent.metadata.orderId);
+    const orderIds = parseOrderIdsFromPaymentIntent(paymentIntent);
+
+    if (orderIds.length > 0) {
+      console.log('Updating orders:', orderIds);
       console.log('Payment Intent Status:', paymentIntent.status);
 
-      // First check if order exists
-      const existingOrder = await Order.findByPk(
-        paymentIntent.metadata.orderId
-      );
+      const existingOrders = await Order.findAll({
+        where: {
+          id: orderIds,
+        },
+      });
+
       console.log(
-        'Existing order found:',
-        existingOrder
-          ? {
-              id: existingOrder.id,
-              number: existingOrder.number,
-              currentPaymentStatus: existingOrder.paymentStatus,
-            }
-          : 'Order not found'
+        'Existing orders found:',
+        existingOrders.map((order) => ({
+          id: order.id,
+          number: order.number,
+          currentStatus: order.status,
+          currentPaymentStatus: order.paymentStatus,
+        }))
       );
 
-      if (existingOrder && paymentIntent.status === 'succeeded') {
-        const updateResult = await Order.update(
-          {
-            status: 'processing', // Cập nhật trạng thái đơn hàng
-            paymentStatus: 'paid', // Cập nhật trạng thái thanh toán
-            paymentTransactionId: paymentIntent.id,
-            paymentProvider: 'stripe',
-            updatedAt: new Date(),
-          },
-          {
-            where: { id: paymentIntent.metadata.orderId },
-          }
+      if (existingOrders.length > 0 && paymentIntent.status === 'succeeded') {
+        const unpaidOrders = existingOrders.filter(
+          (order) => order.paymentStatus !== 'paid'
         );
-        console.log('Order update result:', updateResult);
 
-        // Verify the update
-        const updatedOrder = await Order.findByPk(
-          paymentIntent.metadata.orderId
-        );
-        console.log(
-          'Order after update:',
-          updatedOrder
-            ? {
-                id: updatedOrder.id,
-                number: updatedOrder.number,
-                status: updatedOrder.status, // Trạng thái đơn hàng
-                paymentStatus: updatedOrder.paymentStatus, // Trạng thái thanh toán
-                paymentTransactionId: updatedOrder.paymentTransactionId,
-              }
-            : 'Order not found after update'
-        );
-        
-        // Now reduce inventory since payment is confirmed for Stripe
-        if (updatedOrder) {
-          const { OrderItem, Product, ProductVariant } = require('../models');
-          
-          // Get order items to reduce inventory
-          const orderItems = await OrderItem.findAll({
-            where: { orderId: updatedOrder.id }
-          });
+        const unpaidOrderIds = unpaidOrders.map((order) => order.id);
 
-          for (const item of orderItems) {
-            if (item.variantId) {
-              // Reduce stock for product variant using decrement method
-              await ProductVariant.decrement(
-                { stockQuantity: item.quantity },
-                { where: { id: item.variantId } }
-              );
-            } else {
-              // Reduce stock for product using decrement method
-              await Product.decrement(
-                { stockQuantity: item.quantity },
-                { where: { id: item.productId } }
-              );
+        if (unpaidOrderIds.length > 0) {
+          const updateResult = await Order.update(
+            {
+              status: 'processing',
+              paymentStatus: 'paid',
+              paymentTransactionId: paymentIntent.id,
+              paymentProvider: 'stripe',
+              updatedAt: new Date(),
+            },
+            {
+              where: {
+                id: unpaidOrderIds,
+              },
             }
-          }
-          
-          console.log(`Inventory reduced for order ${updatedOrder.id} after Stripe payment confirmation`);
-          
-          // Clear the user's active cart
-          await clearUserCart(updatedOrder.userId);
+          );
+
+          console.log('Orders update result:', updateResult);
+
+          await reduceInventoryForOrders(unpaidOrderIds);
+
+          console.log(
+            `Inventory reduced for orders ${unpaidOrderIds.join(
+              ', '
+            )} after Stripe payment confirmation`
+          );
+        } else {
+          console.log('All orders already paid, skip inventory reduction');
         }
-      } else if (!existingOrder) {
-        console.log('Order not found for ID:', paymentIntent.metadata.orderId);
+
+        await clearUserCart(existingOrders[0].userId);
+      } else if (existingOrders.length === 0) {
+        console.log('Orders not found for IDs:', orderIds);
       } else {
         console.log('Payment not succeeded, status:', paymentIntent.status);
       }
     } else {
-      console.log('No orderId found in payment intent metadata');
+      console.log('No orderIds found in payment intent metadata');
     }
 
     res.status(200).json({
@@ -163,6 +233,7 @@ const confirmPayment = async (req, res, next) => {
               ? paymentIntent.amount
               : paymentIntent.amount / 100,
           currency: paymentIntent.currency,
+          orderIds,
         },
       },
     });
@@ -184,6 +255,7 @@ const createCustomer = async (req, res, next) => {
     // Check if user already has a Stripe customer ID
     if (user.stripeCustomerId) {
       const customer = await stripeService.getCustomer(user.stripeCustomerId);
+
       return res.status(200).json({
         status: 'success',
         data: { customer },
@@ -249,12 +321,14 @@ const createSetupIntent = async (req, res, next) => {
 
     // Create customer if doesn't exist
     let customerId = user.stripeCustomerId;
+
     if (!customerId) {
       const customer = await stripeService.createCustomer({
         email: user.email,
         name: `${user.firstName} ${user.lastName}`,
         metadata: { userId: user.id },
       });
+
       customerId = customer.id;
       await user.update({ stripeCustomerId: customerId });
     }
@@ -287,12 +361,15 @@ const handleWebhook = async (req, res, next) => {
       case 'payment_intent.succeeded':
         await handlePaymentSucceeded(event.data.object);
         break;
+
       case 'payment_intent.payment_failed':
         await handlePaymentFailed(event.data.object);
         break;
+
       case 'customer.created':
         console.log('Customer created:', event.data.object.id);
         break;
+
       default:
         console.log(`Unhandled event type: ${event.type}`);
     }
@@ -306,53 +383,59 @@ const handleWebhook = async (req, res, next) => {
 // Helper function to handle successful payments
 const handlePaymentSucceeded = async (paymentIntent) => {
   try {
-    if (paymentIntent.metadata.orderId) {
-      await Order.update(
-        {
-          status: 'processing', // Cập nhật trạng thái đơn hàng
-          paymentStatus: 'paid', // Cập nhật trạng thái thanh toán
-          paymentTransactionId: paymentIntent.id,
-          paymentProvider: 'stripe',
-        },
-        {
-          where: { id: paymentIntent.metadata.orderId },
-        }
-      );
-      
-      // Now reduce inventory since payment is confirmed via Stripe webhook
-      const { OrderItem, Product, ProductVariant } = require('../models');
-      
-      // Get order items to reduce inventory
-      const orderItems = await OrderItem.findAll({
-        where: { orderId: paymentIntent.metadata.orderId }
-      });
+    const orderIds = parseOrderIdsFromPaymentIntent(paymentIntent);
 
-      for (const item of orderItems) {
-        if (item.variantId) {
-          // Reduce stock for product variant using decrement method
-          await ProductVariant.decrement(
-            { stockQuantity: item.quantity },
-            { where: { id: item.variantId } }
-          );
-        } else {
-          // Reduce stock for product using decrement method
-          await Product.decrement(
-            { stockQuantity: item.quantity },
-            { where: { id: item.productId } }
-          );
-        }
-      }
-      
-      console.log(
-        `Payment succeeded and inventory reduced for order: ${paymentIntent.metadata.orderId}`
-      );
-
-      // Clear the user's active cart
-      const order = await Order.findByPk(paymentIntent.metadata.orderId);
-      if (order) {
-        await clearUserCart(order.userId);
-      }
+    if (orderIds.length === 0) {
+      console.log('No orderIds found in webhook payment intent metadata');
+      return;
     }
+
+    const existingOrders = await Order.findAll({
+      where: {
+        id: orderIds,
+      },
+    });
+
+    if (existingOrders.length === 0) {
+      console.log('No orders found for webhook orderIds:', orderIds);
+      return;
+    }
+
+    const unpaidOrders = existingOrders.filter(
+      (order) => order.paymentStatus !== 'paid'
+    );
+
+    const unpaidOrderIds = unpaidOrders.map((order) => order.id);
+
+    if (unpaidOrderIds.length === 0) {
+      console.log('Webhook orders already paid, skip inventory reduction');
+      return;
+    }
+
+    await Order.update(
+      {
+        status: 'processing',
+        paymentStatus: 'paid',
+        paymentTransactionId: paymentIntent.id,
+        paymentProvider: 'stripe',
+        updatedAt: new Date(),
+      },
+      {
+        where: {
+          id: unpaidOrderIds,
+        },
+      }
+    );
+
+    await reduceInventoryForOrders(unpaidOrderIds);
+
+    console.log(
+      `Payment succeeded and inventory reduced for orders: ${unpaidOrderIds.join(
+        ', '
+      )}`
+    );
+
+    await clearUserCart(existingOrders[0].userId);
   } catch (error) {
     console.error('Error handling payment succeeded:', error);
   }
@@ -361,42 +444,30 @@ const handlePaymentSucceeded = async (paymentIntent) => {
 // Helper function to handle failed payments
 const handlePaymentFailed = async (paymentIntent) => {
   try {
-    if (paymentIntent.metadata.orderId) {
-      await Order.update(
-        {
-          paymentStatus: 'failed',
-          paymentTransactionId: paymentIntent.id,
-          paymentProvider: 'stripe',
-        },
-        {
-          where: { id: paymentIntent.metadata.orderId },
-        }
-      );
-      console.log(
-        `Payment failed for order: ${paymentIntent.metadata.orderId}`
-      );
+    const orderIds = parseOrderIdsFromPaymentIntent(paymentIntent);
+
+    if (orderIds.length === 0) {
+      console.log('No orderIds found for failed payment');
+      return;
     }
+
+    await Order.update(
+      {
+        paymentStatus: 'failed',
+        paymentTransactionId: paymentIntent.id,
+        paymentProvider: 'stripe',
+        updatedAt: new Date(),
+      },
+      {
+        where: {
+          id: orderIds,
+        },
+      }
+    );
+
+    console.log(`Payment failed for orders: ${orderIds.join(', ')}`);
   } catch (error) {
     console.error('Error handling payment failed:', error);
-  }
-};
-
-// Helper function to clear user cart after successful payment
-const clearUserCart = async (userId) => {
-  try {
-    const cart = await Cart.findOne({
-      where: { userId, status: 'active' }
-    });
-
-    if (cart) {
-      await cart.update({ status: 'converted' });
-      await CartItem.destroy({
-        where: { cartId: cart.id }
-      });
-      console.log(`Cart cleared for user ${userId}`);
-    }
-  } catch (error) {
-    console.error(`Error clearing cart for user ${userId}:`, error);
   }
 };
 
@@ -410,6 +481,7 @@ const createRefund = async (req, res, next) => {
     }
 
     const order = await Order.findByPk(orderId);
+
     if (!order) {
       throw new AppError('Order not found', 404);
     }
@@ -442,45 +514,50 @@ const createRefund = async (req, res, next) => {
 const verifySePayApiKey = (req) => {
   // SePay sends API key in Authorization header as "Authorization": "Apikey API_KEY_CUA_BAN"
   const authHeader = req.headers.authorization;
-  
+
   if (!authHeader) {
     console.error('No Authorization header provided in SePay webhook');
     return false;
   }
-  
+
   // Check if the header starts with "Apikey "
   if (!authHeader.startsWith('Apikey ')) {
     console.error('Invalid Authorization header format in SePay webhook');
     return false;
   }
-  
+
   // Extract the API key from the header
   const providedApiKey = authHeader.substring(7).trim(); // Remove "Apikey " prefix
   const expectedApiKey = process.env.SEPAY_API_KEY;
-  
+
   if (!expectedApiKey) {
     console.warn('SePay API key not configured in environment variables');
+
     // In development, you might want to allow the webhook without API key verification
-    return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+    return (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'test'
+    );
   }
-  
+
   // Compare the provided API key with the expected one
   // Use constant-time comparison to prevent timing attacks
   const expectedLength = expectedApiKey.length;
   const providedLength = providedApiKey.length;
   let mismatch = expectedLength !== providedLength;
-  
+
   for (let i = 0; i < Math.max(expectedLength, providedLength); i++) {
     const expectedChar = expectedApiKey.charCodeAt(i) || 0;
     const providedChar = providedApiKey.charCodeAt(i) || 0;
+
     mismatch |= expectedChar ^ providedChar;
   }
-  
+
   if (mismatch !== 0) {
     console.error('Invalid SePay API key provided');
     return false;
   }
-  
+
   return true;
 };
 
@@ -490,6 +567,7 @@ const handleSePayWebhook = async (req, res, next) => {
     // Verify the webhook source using API key authentication
     if (!verifySePayApiKey(req)) {
       console.error('Invalid SePay API key');
+
       return res.status(401).json({ error: 'Unauthorized webhook request' });
     }
 
@@ -505,109 +583,125 @@ const handleSePayWebhook = async (req, res, next) => {
       accumulated,
       subAccount,
       referenceCode,
-      description
+      description,
     } = req.body;
 
-    console.log('SePay webhook received:', { id, transferAmount, content, transferType });
+    console.log('SePay webhook received:', {
+      id,
+      transferAmount,
+      content,
+      transferType,
+    });
 
     // Validate required fields
     if (!id || !transferType || !transferAmount || !transactionDate) {
       console.log('Missing required fields in SePay webhook');
+
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     // Validate data types
     if (typeof id !== 'number' && typeof id !== 'string') {
       console.log('Invalid transaction ID type in SePay webhook');
+
       return res.status(400).json({ error: 'Invalid transaction ID type' });
     }
-    
-    if (typeof transferAmount !== 'number' || typeof transferType !== 'string') {
+
+    if (
+      typeof transferAmount !== 'number' ||
+      typeof transferType !== 'string'
+    ) {
       console.log('Invalid data types in SePay webhook');
+
       return res.status(400).json({ error: 'Invalid data types' });
     }
 
     // Validate transfer amount is positive
     if (transferAmount <= 0) {
       console.log('Invalid transfer amount:', transferAmount);
-      return res.status(400).json({ error: 'Transfer amount must be positive' });
+
+      return res
+        .status(400)
+        .json({ error: 'Transfer amount must be positive' });
     }
 
     // Validate transfer type
     if (!['in', 'out'].includes(transferType)) {
       console.log('Invalid transfer type:', transferType);
+
       return res.status(400).json({ error: 'Invalid transfer type' });
     }
 
     // Only process incoming transactions (money coming in)
     if (transferType !== 'in') {
       console.log('Ignoring outgoing transaction');
-      return res.status(200).json({ received: true, message: 'Outgoing transaction ignored' });
+
+      return res.status(200).json({
+        received: true,
+        message: 'Outgoing transaction ignored',
+      });
     }
 
     // Validate transaction date format
     const parsedTransactionDate = new Date(transactionDate);
+
     if (isNaN(parsedTransactionDate.getTime())) {
       console.log('Invalid transaction date format:', transactionDate);
-      return res.status(400).json({ error: 'Invalid transaction date format' });
+
+      return res
+        .status(400)
+        .json({ error: 'Invalid transaction date format' });
     }
 
-    // Extract order ID from content or code (you can customize this based on your format)
-    // For example, if the content contains order number like "Order #ORD-12345 for payment"
-    // or if the code contains the order ID
+    // Extract order ID from content or code
     let orderId = null;
-    
+
     // Try to extract order ID from content
     if (content) {
-      // Look for order ID in the content (adjust the pattern according to your format)
-      // This regex looks for patterns like:
-      // - ORD-12345, ORDER-12345
-      // - ORD12345, ORDER12345 (without hyphen - like your example ORD251100012)
-      // - order_123, order123
-      // - SEPAY followed by number like SEPAY2845 (where 2845 might be order ID)
-      // - Any 6+ digit number that might be an order ID
       const patterns = [
-        /ORD[-_]?(\d+)/i,                 // Matches ORD12345 or ORD-12345 or ORD_12345
-        /ORDER[-_]?(\d+)/i,               // Matches ORDER12345 or ORDER-12345 or ORDER_12345
-        /ORD[-_]?\w+/i,                   // Matches full order numbers like ORD251100012
-        /ORDER[-_]?\w+/i,                 // Matches full order numbers like ORDERXXXXXXXX
-        /order[-_\s]?(\d+)/i,             // Matches order_123, order-123, order123
-        /SEPAY(\d+)/i,                    // Matches SEPAY2845 pattern (from your example)
-        /SEPAY[-_\s]?(\d+)/i,             // Matches SEPAY_2845, SEPAY-2845, SEPAY 2845
-        /\b(\d{6,})\b/                   // Matches any 6+ digit number
+        /ORD[-_]?(\d+)/i,
+        /ORDER[-_]?(\d+)/i,
+        /ORD[-_]?\w+/i,
+        /ORDER[-_]?\w+/i,
+        /order[-_\s]?(\d+)/i,
+        /SEPAY(\d+)/i,
+        /SEPAY[-_\s]?(\d+)/i,
+        /\b(\d{6,})\b/,
       ];
-      
+
       for (const pattern of patterns) {
         const match = content.match(pattern);
+
         if (match) {
-          // Use the full match for order number patterns like ORD251100012, or captured group for others
-          // This will match the entire ORD251100012 string if it fits the ORD[-_]?\w+ pattern
           orderId = match[0];
+
           if (orderId) {
             orderId = orderId.trim();
-            break; // Found a match, stop looking
+            break;
           }
         }
       }
     }
-    
+
     // Also try to extract from code if not found in content
     if (!orderId && code) {
       const codePatterns = [
-        /ORD[-_]?(\d+)/i,                 // Matches ORD12345 or ORD-12345 or ORD_12345
-        /ORDER[-_]?(\d+)/i,               // Matches ORDER12345 or ORDER-12345 or ORDER_12345
-        /ORD[-_]?\w+/i,                   // Matches full order numbers like ORD251100012
-        /ORDER[-_]?\w+/i,                 // Matches full order numbers like ORDERXXXXXXXX
-        /order[-_\s]?(\d+)/i,             // Matches order_123, order-123, order123
-        /SEPAY(\d+)/i,                    // Matches SEPAY2845 pattern (from your example)
-        /SEPAY[-_\s]?(\d+)/i,             // Matches SEPAY_2845, SEPAY-2845, SEPAY 2845
-        /\b(\d{6,})\b/                   // Matches any 6+ digit number
+        /ORD[-_]?(\d+)/i,
+        /ORDER[-_]?(\d+)/i,
+        /ORD[-_]?\w+/i,
+        /ORDER[-_]?\w+/i,
+        /order[-_\s]?(\d+)/i,
+        /SEPAY(\d+)/i,
+        /SEPAY[-_\s]?(\d+)/i,
+        /\b(\d{6,})\b/,
       ];
-      
+
       for (const pattern of codePatterns) {
         const match = code.match(pattern);
+
         if (match) {
           orderId = match[0];
+
           if (orderId) {
             orderId = orderId.trim();
             break;
@@ -619,20 +713,22 @@ const handleSePayWebhook = async (req, res, next) => {
     // If we still can't find an order ID, use the referenceCode
     if (!orderId && referenceCode) {
       const refPatterns = [
-        /ORD[-_]?(\d+)/i,                 // Matches ORD12345 or ORD-12345 or ORD_12345
-        /ORDER[-_]?(\d+)/i,               // Matches ORDER12345 or ORDER-12345 or ORDER_12345
-        /ORD[-_]?\w+/i,                   // Matches full order numbers like ORD251100012
-        /ORDER[-_]?\w+/i,                 // Matches full order numbers like ORDERXXXXXXXX
-        /order[-_\s]?(\d+)/i,             // Matches order_123, order-123, order123
-        /SEPAY(\d+)/i,                    // Matches SEPAY2845 pattern (from your example)
-        /SEPAY[-_\s]?(\d+)/i,             // Matches SEPAY_2845, SEPAY-2845, SEPAY 2845
-        /\b(\d{6,})\b/                   // Matches any 6+ digit number
+        /ORD[-_]?(\d+)/i,
+        /ORDER[-_]?(\d+)/i,
+        /ORD[-_]?\w+/i,
+        /ORDER[-_]?\w+/i,
+        /order[-_\s]?(\d+)/i,
+        /SEPAY(\d+)/i,
+        /SEPAY[-_\s]?(\d+)/i,
+        /\b(\d{6,})\b/,
       ];
-      
+
       for (const pattern of refPatterns) {
         const match = referenceCode.match(pattern);
+
         if (match) {
           orderId = match[0];
+
           if (orderId) {
             orderId = orderId.trim();
             break;
@@ -643,9 +739,10 @@ const handleSePayWebhook = async (req, res, next) => {
 
     if (!orderId) {
       console.log('No order ID found in webhook data');
-      return res.status(200).json({ 
-        received: true, 
-        message: 'No order ID found in transaction, processed successfully' 
+
+      return res.status(200).json({
+        received: true,
+        message: 'No order ID found in transaction, processed successfully',
       });
     }
 
@@ -653,131 +750,136 @@ const handleSePayWebhook = async (req, res, next) => {
 
     // Find the order in the database
     let order = null;
-    
+
     // Try multiple ways to find the order
     try {
-      // First, try to find by exact order number (like ORD-12345, which is stored in the 'number' field)
-      order = await Order.findOne({ 
-        where: { 
-          number: orderId 
-        } 
+      // First, try to find by exact order number
+      order = await Order.findOne({
+        where: {
+          number: orderId,
+        },
       });
-      
+
       // If not found, try variations of the order number format
-      // This handles cases where the stored format has hyphens but the webhook doesn't (or vice versa)
       if (!order) {
-        // Try to find with hyphens (e.g., if webhook has "ORD251100012" but DB has "ORD-2511-00012")
-        // Insert hyphens at likely positions: after "ORD" and before last 4 digits
         if (orderId.startsWith('ORD') && orderId.length > 7) {
-          const formattedOrderId = `${orderId.substring(0, 3)}-${orderId.substring(3, 7)}-${orderId.substring(7)}`;
-          order = await Order.findOne({ 
-            where: { 
-              number: formattedOrderId 
-            } 
+          const formattedOrderId = `${orderId.substring(
+            0,
+            3
+          )}-${orderId.substring(3, 7)}-${orderId.substring(7)}`;
+
+          order = await Order.findOne({
+            where: {
+              number: formattedOrderId,
+            },
           });
         }
       }
-      
+
       // If still not found, try the reverse: if webhook has hyphens, remove them for DB lookup
       if (!order && orderId.includes('-')) {
         const unformattedOrderId = orderId.replace(/-/g, '');
-        order = await Order.findOne({ 
-          where: { 
-            number: unformattedOrderId 
-          } 
+
+        order = await Order.findOne({
+          where: {
+            number: unformattedOrderId,
+          },
         });
-        
-        // Also try pattern-based hyphen insertion in reverse
+
         if (!order) {
-          const formattedOrderId = `${unformattedOrderId.substring(0, 3)}-${unformattedOrderId.substring(3, 7)}-${unformattedOrderId.substring(7)}`;
-          order = await Order.findOne({ 
-            where: { 
-              number: formattedOrderId 
-            } 
+          const formattedOrderId = `${unformattedOrderId.substring(
+            0,
+            3
+          )}-${unformattedOrderId.substring(
+            3,
+            7
+          )}-${unformattedOrderId.substring(7)}`;
+
+          order = await Order.findOne({
+            where: {
+              number: formattedOrderId,
+            },
           });
         }
       }
-      
+
       // If still not found, try looking for a numeric ID match in the 'number' field
-      // Some systems use numeric order numbers like "12345"
       if (!order) {
         const numericPart = parseInt(orderId.replace(/\D/g, ''));
+
         if (!isNaN(numericPart)) {
-          // Try matching against the number field if it contains the numeric part
-          order = await Order.findOne({ 
-            where: { 
-              number: { [Op.iLike]: `%${numericPart}%` } 
-            } 
+          order = await Order.findOne({
+            where: {
+              number: { [Op.iLike]: `%${numericPart}%` },
+            },
           });
         }
       }
-      
+
       // If we still haven't found it, try a more comprehensive search
       if (!order) {
-        // Try partial matching with the original order ID
-        order = await Order.findOne({ 
-          where: { 
-            [Op.or]: [
-              { number: { [Op.iLike]: `%${orderId}%` } },  // Partial match in order number
-            ]
-          }
+        order = await Order.findOne({
+          where: {
+            [Op.or]: [{ number: { [Op.iLike]: `%${orderId}%` } }],
+          },
         });
       }
     } catch (error) {
       console.error('Database error finding order:', error);
+
       return res.status(500).json({ error: 'Error processing order' });
     }
 
     if (!order) {
       console.log('Order not found:', orderId);
-      return res.status(200).json({ 
-        received: true, 
-        message: `Order with ID ${orderId} not found, processed successfully` 
+
+      return res.status(200).json({
+        received: true,
+        message: `Order with ID ${orderId} not found, processed successfully`,
       });
     }
 
     // Verify that the transfer amount matches the order total
-    // Note: In the Order model, the total field is called 'total' (not 'totalAmount')
-    const orderTotal = parseFloat(order.total); // Get the 'total' field from the Order model
-    const transferAmountInVND = transferAmount; // SePay transfers amount in VND
-    
+    const orderTotal = parseFloat(order.total);
+    const transferAmountInVND = transferAmount;
+
     console.log('Comparing amounts:', {
       orderNumber: order.number,
       orderTotal: orderTotal,
-      transferAmount: transferAmount,
-      isMatch: Math.abs(orderTotal - transferAmount) < 0.01 // Using small tolerance for floating point comparison
+      transferAmount: transferAmountInVND,
+      isMatch: Math.abs(orderTotal - transferAmountInVND) < 0.01,
     });
 
-    // Check if amount matches (allowing for small differences due to rounding)
-    if (Math.abs(orderTotal - transferAmount) > 0.01) {
-      console.log(`Amount mismatch: Order total ${orderTotal} vs Transfer amount ${transferAmount}`);
-      
-      // You might want to still acknowledge the webhook but log the mismatch
-      // or you might want to return an error to indicate the issue
-      return res.status(200).json({ 
-        received: true, 
-        message: 'Amount mismatch detected, processed successfully' 
+    // Check if amount matches
+    if (Math.abs(orderTotal - transferAmountInVND) > 0.01) {
+      console.log(
+        `Amount mismatch: Order total ${orderTotal} vs Transfer amount ${transferAmountInVND}`
+      );
+
+      return res.status(200).json({
+        received: true,
+        message: 'Amount mismatch detected, processed successfully',
       });
     }
 
-    // Prevent duplicate processing - check if this transaction ID already processed
+    // Prevent duplicate processing
     if (order.paymentTransactionId && order.paymentTransactionId === id.toString()) {
       console.log('Duplicate webhook received for transaction ID:', id);
-      return res.status(200).json({ 
-        received: true, 
-        message: 'Webhook already processed' 
+
+      return res.status(200).json({
+        received: true,
+        message: 'Webhook already processed',
       });
     }
 
     // Update the order status to paid and processing if not already processed
     if (order.paymentStatus === 'pending' || order.paymentStatus === 'unpaid') {
-      const updateResult = await Order.update(
+      await Order.update(
         {
-          status: 'processing',        // Update order status to processing
-          paymentStatus: 'paid',       // Update payment status to paid
-          paymentTransactionId: id.toString(), // Store SePay transaction ID
-          paymentProvider: 'sepay',    // Mark the payment provider
-          // Note: The Order model doesn't have a paymentDate field, so we'll just update the timestamp
+          status: 'processing',
+          paymentStatus: 'paid',
+          paymentTransactionId: id.toString(),
+          paymentProvider: 'sepay',
           updatedAt: new Date(),
         },
         {
@@ -785,27 +887,7 @@ const handleSePayWebhook = async (req, res, next) => {
         }
       );
 
-      // Now reduce inventory since payment is confirmed
-      // Get order items to reduce inventory
-      const orderItems = await OrderItem.findAll({
-        where: { orderId: order.id }
-      });
-
-      for (const item of orderItems) {
-        if (item.variantId) {
-          // Reduce stock for product variant using decrement method
-          await ProductVariant.decrement(
-            { stockQuantity: item.quantity },
-            { where: { id: item.variantId } }
-          );
-        } else {
-          // Reduce stock for product using decrement method
-          await Product.decrement(
-            { stockQuantity: item.quantity },
-            { where: { id: item.productId } }
-          );
-        }
-      }
+      await reduceInventoryForOrders([order.id]);
 
       console.log('Order updated successfully:', {
         orderId: order.id,
@@ -813,37 +895,31 @@ const handleSePayWebhook = async (req, res, next) => {
         paymentStatus: 'paid',
         status: 'processing',
         transactionId: id,
-        paymentDate: parsedTransactionDate
+        paymentDate: parsedTransactionDate,
       });
 
-      // Clear the user's active cart
       await clearUserCart(order.userId);
-
-      // Optionally, you might want to emit an event or send a notification here
-      // For example, send email notification to customer about successful payment
-      // await emailService.sendPaymentConfirmation(order.userId, order.id);
-      
     } else {
       console.log('Order already processed:', {
         orderId: order.id,
         orderNumber: order.number,
         currentPaymentStatus: order.paymentStatus,
-        currentOrderStatus: order.status
+        currentOrderStatus: order.status,
       });
-      return res.status(200).json({ 
-        received: true, 
-        message: 'Order already processed, webhook acknowledged' 
+
+      return res.status(200).json({
+        received: true,
+        message: 'Order already processed, webhook acknowledged',
       });
     }
 
-    res.status(200).json({ 
-      received: true, 
+    res.status(200).json({
+      received: true,
       message: 'SePay webhook processed successfully',
       orderId: order.id,
       orderNumber: order.number,
-      transactionId: id
+      transactionId: id,
     });
-
   } catch (error) {
     console.error('Error processing SePay webhook:', error);
     next(error);

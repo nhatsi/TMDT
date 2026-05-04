@@ -1,14 +1,24 @@
 const {
   Product,
   Category,
+  ProductCategory,
   ProductAttribute,
   ProductVariant,
   ProductSpecification,
   Review,
+  OrderItem,
+  User,
+  Order,
+  RefundRequest,
+  UserBehavior,
+  Payout,
   sequelize,
 } = require('../models');
 const { AppError } = require('../middlewares/errorHandler');
 const { Op } = require('sequelize');
+
+const { trackUserBehavior } = require('../services/userBehavior.service');
+
 
 // Get all products with pagination
 const getAllProducts = async (req, res, next) => {
@@ -29,7 +39,11 @@ const getAllProducts = async (req, res, next) => {
 
     // Build filter conditions
     const whereConditions = {};
-    const includeConditions = [];
+          // 🔥 Filter theo seller
+      if (req.user && req.user.role !== 'admin') {
+        whereConditions.seller_id = req.user.id;
+      }
+      const includeConditions = [];
 
     // Search filter
     if (search) {
@@ -198,6 +212,11 @@ const getProductById = async (req, res, next) => {
     const product = await Product.findByPk(id, {
       include: [
         {
+  model: User,
+  as: 'seller',
+  attributes: ['id', 'firstName', 'lastName', 'email', 'phone', 'avatar'],
+},
+        {
           association: 'categories',
           through: { attributes: [] },
         },
@@ -234,6 +253,16 @@ const getProductById = async (req, res, next) => {
     if (!product) {
       throw new AppError('Không tìm thấy sản phẩm', 404);
     }
+    if (req.user) {
+  await trackUserBehavior({
+    userId: req.user.id,
+    productId: product.id,
+    actionType: 'view',
+    metadata: {
+      source: 'product_detail_id',
+    },
+  });
+}
 
     // Process product to add ratings calculation
     const productJson = product.toJSON();
@@ -280,6 +309,11 @@ const getProductBySlug = async (req, res, next) => {
       where: { slug },
       include: [
         {
+  model: User,
+  as: 'seller',
+  attributes: ['id', 'firstName', 'lastName', 'email', 'phone', 'avatar'],
+},
+        {
           association: 'categories',
           through: { attributes: [] },
         },
@@ -315,6 +349,17 @@ const getProductBySlug = async (req, res, next) => {
     if (!product) {
       throw new AppError('Không tìm thấy sản phẩm', 404);
     }
+    if (req.user) {
+  await trackUserBehavior({
+    userId: req.user.id,
+    productId: product.id,
+    actionType: 'view',
+    metadata: {
+      source: 'product_detail_slug',
+      slug,
+    },
+  });
+}
 
     // Process product to add ratings calculation
     const productJson = product.toJSON();
@@ -424,7 +469,7 @@ const getProductBySlug = async (req, res, next) => {
 const createProduct = async (req, res, next) => {
   const transaction = await sequelize.transaction();
 
-  try {
+  try { 
     const {
       name,
       baseName,
@@ -450,13 +495,33 @@ const createProduct = async (req, res, next) => {
     } = req.body;
 
     // Determine if this is a variant product
-    const isVariantProduct = variants && variants.length > 0;
+    // Chuẩn hóa specifications
+const specificationsArray = Array.isArray(specifications)
+  ? specifications.filter((spec) => spec.name && spec.value)
+  : specifications && typeof specifications === 'object'
+    ? Object.entries(specifications).map(([name, value]) => ({
+        name,
+        value,
+        category: 'General',
+      }))
+    : [];
+
+const specificationsObject = specificationsArray.reduce((obj, spec) => {
+  if (spec.name && spec.value) {
+    obj[spec.name] = spec.value;
+  }
+  return obj;
+}, {});
+
+// Determine if this is a variant product
+const isVariantProduct = variants && variants.length > 0;
 
     // Create product
     const product = await Product.create(
       {
         name,
         baseName: baseName || name,
+         seller_id: req.user.id,   // 🔥 THÊM DÒNG NÀY
         description,
         shortDescription,
         price: isVariantProduct ? 0 : price, // Set to 0 if using variants
@@ -471,7 +536,7 @@ const createProduct = async (req, res, next) => {
         seoDescription,
         seoKeywords: seoKeywords || [],
         isVariantProduct,
-        specifications: specifications || {},
+        specifications: specificationsObject,
       },
       { transaction }
     );
@@ -489,20 +554,20 @@ const createProduct = async (req, res, next) => {
       await product.setCategories(categories, { transaction });
     }
 
-    // Add specifications
-    if (specifications && specifications.length > 0) {
-      const productSpecifications = specifications.map((spec, index) => ({
-        productId: product.id,
-        name: spec.name,
-        value: spec.value,
-        category: spec.category || 'General',
-        sortOrder: index,
-      }));
+   // Add specifications
+if (specificationsArray.length > 0) {
+  const productSpecifications = specificationsArray.map((spec, index) => ({
+    productId: product.id,
+    name: spec.name,
+    value: spec.value,
+    category: spec.category || 'General',
+    sortOrder: index,
+  }));
 
-      await ProductSpecification.bulkCreate(productSpecifications, {
-        transaction,
-      });
-    }
+  await ProductSpecification.bulkCreate(productSpecifications, {
+    transaction,
+  });
+}
 
     // Add parent attributes
     if (parentAttributes && parentAttributes.length > 0) {
@@ -532,25 +597,46 @@ const createProduct = async (req, res, next) => {
 
     // Add variants
     if (variants && variants.length > 0) {
-      const productVariants = variants.map((variant, index) => ({
-        productId: product.id,
-        sku: variant.sku || `${product.id}-VAR-${index + 1}`,
-        variantName: variant.name || variant.variantName,
-        price: parseFloat(variant.price) || 0,
-        compareAtPrice: variant.compareAtPrice
-          ? parseFloat(variant.compareAtPrice)
-          : null,
-        stockQuantity: parseInt(variant.stockQuantity || variant.stock) || 0,
-        isDefault: variant.isDefault || index === 0, // First variant is default
-        isAvailable: variant.isAvailable !== false,
-        attributes: variant.attributes || {},
-        attributeValues: variant.attributeValues || {},
-        specifications: variant.specifications || {},
-        images: variant.images || [],
-        displayName: variant.displayName || variant.name || variant.variantName,
-        sortOrder: variant.sortOrder || index,
-      }));
+    const productVariants = variants.map((variant, index) => {
+  const variantName =
+    variant.name ||
+    variant.variantName ||
+    variant.displayName ||
+    `Biến thể ${index + 1}`;
 
+  return {
+    productId: product.id,
+
+    // Cột name trong bảng product_variants đang NOT NULL
+    name: variantName,
+
+    sku: variant.sku || `${product.id}-VAR-${index + 1}`,
+
+    variantName,
+    displayName: variant.displayName || variantName,
+
+    price: parseFloat(variant.price) || 0,
+    compareAtPrice: variant.compareAtPrice
+      ? parseFloat(variant.compareAtPrice)
+      : null,
+
+    stockQuantity: parseInt(variant.stockQuantity || variant.stock) || 0,
+
+    isDefault: variant.isDefault || index === 0,
+    isAvailable: variant.isAvailable !== false,
+
+    attributes: variant.attributes || {},
+    attributeValues: variant.attributeValues || {},
+
+    specifications:
+      variant.specifications && typeof variant.specifications === 'object'
+        ? variant.specifications
+        : {},
+
+    images: variant.images || [],
+    sortOrder: variant.sortOrder || index,
+  };
+});
       await ProductVariant.bulkCreate(productVariants, { transaction });
     }
 
@@ -643,7 +729,19 @@ const updateProduct = async (req, res, next) => {
     });
 
     // Find product
-    const product = await Product.findByPk(id);
+   let product;
+
+if (req.user.role === 'admin') {
+  product = await Product.findByPk(id);
+} else {
+  product = await Product.findOne({
+    where: {
+      id,
+      seller_id: req.user.id,
+    },
+  });
+}
+    
     if (!product) {
       throw new AppError('Không tìm thấy sản phẩm', 404);
     }
@@ -812,7 +910,18 @@ const deleteProduct = async (req, res, next) => {
     const { id } = req.params;
 
     // Find product
-    const product = await Product.findByPk(id);
+    let product;
+
+if (req.user.role === 'admin') {
+  product = await Product.findByPk(id);
+} else {
+  product = await Product.findOne({
+    where: {
+      id,
+      seller_id: req.user.id,
+    },
+  });
+}
     if (!product) {
       throw new AppError('Không tìm thấy sản phẩm', 404);
     }
@@ -1027,6 +1136,16 @@ const searchProducts = async (req, res, next) => {
     if (!q) {
       throw new AppError('Từ khóa tìm kiếm là bắt buộc', 400);
     }
+    if (req.user) {
+  await trackUserBehavior({
+    userId: req.user.id,
+    productId: null,
+    actionType: 'search',
+    metadata: {
+      keyword: q,
+    },
+  });
+}
 
     const { count, rows: products } = await Product.findAndCountAll({
       where: {
@@ -1540,7 +1659,884 @@ const getProductFilters = async (req, res, next) => {
     next(error);
   }
 };
+const getMyProducts = async (req, res, next) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        seller_id: req.user.id,
+      },
+      order: [['createdAt', 'DESC']],
+    });
 
+    res.status(200).json({
+      status: 'success',
+      data: products,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getSellerDashboard = async (req, res, next) => {
+  try {
+    const sellerId = req.user.id;
+
+    const totalProducts = await Product.count({
+      where: { seller_id: sellerId },
+    });
+
+    const orderItems = await OrderItem.findAll({
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'seller_id'],
+          where: { seller_id: sellerId },
+        },
+        {
+          model: Order,
+          attributes: ['id', 'status', 'createdAt'],
+        },
+      ],
+    });
+
+    let totalOrders = 0;
+    let pendingOrders = 0;
+    let shippingOrders = 0;
+    let deliveredOrders = 0;
+    let totalRevenue = 0;
+
+    const revenueMap = {};
+
+    orderItems.forEach((item) => {
+      const order = item.Order || item.order || null;
+
+      const status = order?.status || '';
+      const createdAt = order?.createdAt || null;
+
+      totalOrders++;
+
+    if (status === 'pending' || status === 'processing') {
+  pendingOrders++;
+}
+
+if (status === 'shipped') {
+  shippingOrders++;
+}
+
+      if (status === 'delivered') {
+        deliveredOrders++;
+
+        const itemRevenue =
+          (Number(item.price) || 0) * (Number(item.quantity) || 0);
+
+        totalRevenue += itemRevenue;
+
+        if (createdAt) {
+          const dateKey = new Date(createdAt).toISOString().slice(0, 10);
+
+          if (!revenueMap[dateKey]) {
+            revenueMap[dateKey] = 0;
+          }
+
+          revenueMap[dateKey] += itemRevenue;
+        }
+      }
+    });
+
+    const revenueByDate = Object.keys(revenueMap)
+      .sort()
+      .map((date) => ({
+        date,
+        revenue: revenueMap[date],
+      }));
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        totalProducts,
+        totalOrders,
+        pendingOrders,
+        shippingOrders,
+        deliveredOrders,
+        totalRevenue,
+        revenueByDate,
+      },
+    });
+  } catch (error) {
+    console.error('GET SELLER DASHBOARD ERROR:', error);
+    next(error);
+  }
+};
+const getSellerOrders = async (req, res, next) => {
+  try {
+    const sellerId = req.user.id;
+
+    const sellerProducts = await Product.findAll({
+      where: { seller_id: sellerId },
+      attributes: ['id', 'name'],
+      raw: true,
+    });
+
+    const productIds = sellerProducts.map((p) => p.id);
+    const productMap = {};
+    sellerProducts.forEach((p) => {
+      productMap[p.id] = p.name;
+    });
+
+    if (productIds.length === 0) {
+      return res.status(200).json({
+        status: 'success',
+        data: [],
+      });
+    }
+
+    const orderItems = await OrderItem.findAll({
+      
+      where: {
+        productId: productIds,
+      },
+      include: [
+        {
+          model: Order,
+          attributes: ['id', 'status', 'createdAt', 'userId'],
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'firstName', 'lastName', 'email', 'phone'],
+            },
+          ],
+        },
+      ],
+      order: [['createdAt', 'DESC']],
+    });
+    
+
+    const result = orderItems.map((item) => ({
+      id: item.id,
+      orderId: item.orderId,
+      productId: item.productId,
+      productName: productMap[item.productId] || 'Không rõ',
+      quantity: item.quantity,
+      price: item.price,
+      total: Number(item.price) * Number(item.quantity),
+      status: item.Order?.status || 'unknown',
+      createdAt: item.Order?.createdAt || item.createdAt,
+      customer: item.Order?.User
+        ? {
+            id: item.Order.User.id,
+            name: `${item.Order.User.firstName || ''} ${item.Order.User.lastName || ''}`.trim(),
+            email: item.Order.User.email || '',
+            phone: item.Order.User.phone || '',
+          }
+        : null,
+    }));
+
+    res.status(200).json({
+      status: 'success',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const updateSellerOrderStatus = async (req, res, next) => {
+  try {
+    const sellerId = req.user.id;
+    const { orderItemId } = req.params;
+    const { status } = req.body;
+
+    const allowedStatuses = ['processing', 'shipped', 'delivered', 'cancelled'];
+
+    if (!allowedStatuses.includes(status)) {
+      throw new AppError('Trạng thái không hợp lệ', 400);
+    }
+
+    const orderItem = await OrderItem.findByPk(orderItemId, {
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'seller_id', 'name'],
+        },
+        {
+          model: Order,
+          attributes: ['id', 'status'],
+        },
+      ],
+    });
+
+    if (!orderItem) {
+      throw new AppError('Không tìm thấy đơn hàng', 404);
+    }
+
+    if (!orderItem.Product || orderItem.Product.seller_id !== sellerId) {
+      throw new AppError('Bạn không có quyền cập nhật đơn này', 403);
+    }
+
+    const currentStatus = orderItem.Order?.status;
+
+    const validTransitions = {
+      pending: ['processing', 'cancelled'],
+      processing: ['shipped', 'cancelled'],
+      shipped: ['delivered', 'cancelled'],
+      delivered: [],
+      cancelled: [],
+    };
+
+    if (!validTransitions[currentStatus]?.includes(status)) {
+      throw new AppError(
+        `Không thể chuyển từ ${currentStatus} sang ${status}`,
+        400
+      );
+    }
+
+    orderItem.Order.status = status;
+    await orderItem.Order.save();
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Cập nhật trạng thái đơn hàng thành công',
+      data: {
+        orderId: orderItem.Order.id,
+        orderItemId: orderItem.id,
+        productName: orderItem.Product.name,
+        status: orderItem.Order.status,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const getSellerRevenue = async (req, res, next) => {
+  try {
+    const sellerId = req.user.id;
+    const COMMISSION_RATE = 0.05;
+    const APPROVED_REFUND_STATUSES = ['approved', 'refunded', 'completed'];
+
+    const money = (value) => Math.round(Number(value || 0));
+
+    const orderItems = await OrderItem.findAll({
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'name', 'seller_id'],
+          where: { seller_id: sellerId },
+        },
+        {
+          model: Order,
+          attributes: [
+            'id',
+            'number',
+            'status',
+            'paymentStatus',
+            'createdAt',
+            'subtotal',
+            'commissionAmount',
+            'sellerNetAmount',
+            'refundAmount',
+            'refundStatus',
+          ],
+          where: {
+            status: 'delivered',
+          },
+        },
+      ],
+      order: [['createdAt', 'DESC']],
+    });
+
+    let grossRevenue = 0;
+    const revenueDateMap = {};
+    const revenueMonthMap = {};
+    const productMap = {};
+
+    const revenueByProducts = orderItems.map((item) => {
+      const quantity = Number(item.quantity) || 0;
+      const price = Number(item.price) || 0;
+      const itemTotal = money(item.subtotal || price * quantity);
+
+      grossRevenue += itemTotal;
+
+      const createdAt = item.Order?.createdAt;
+      if (createdAt) {
+        const dateKey = new Date(createdAt).toISOString().slice(0, 10);
+        const monthKey = new Date(createdAt).toISOString().slice(0, 7);
+
+        if (!revenueDateMap[dateKey]) {
+          revenueDateMap[dateKey] = {
+            date: dateKey,
+            grossRevenue: 0,
+            refundAmount: 0,
+            netRevenue: 0,
+            orderCount: 0,
+          };
+        }
+
+        revenueDateMap[dateKey].grossRevenue += itemTotal;
+        revenueDateMap[dateKey].orderCount += 1;
+
+        if (!revenueMonthMap[monthKey]) {
+          revenueMonthMap[monthKey] = {
+            month: monthKey,
+            grossRevenue: 0,
+            refundAmount: 0,
+            netRevenue: 0,
+            orderCount: 0,
+          };
+        }
+
+        revenueMonthMap[monthKey].grossRevenue += itemTotal;
+        revenueMonthMap[monthKey].orderCount += 1;
+      }
+
+      if (!productMap[item.productId]) {
+        productMap[item.productId] = {
+          productId: item.productId,
+          productName: item.Product?.name || 'Sản phẩm',
+          quantitySold: 0,
+          grossRevenue: 0,
+          orderCount: 0,
+        };
+      }
+
+      productMap[item.productId].quantitySold += quantity;
+      productMap[item.productId].grossRevenue += itemTotal;
+      productMap[item.productId].orderCount += 1;
+
+      return {
+        orderItemId: item.id,
+        productId: item.productId,
+        productName: item.Product?.name || 'Sản phẩm',
+        quantity,
+        price,
+        total: itemTotal,
+        orderId: item.orderId,
+        orderNumber: item.Order?.number,
+        status: item.Order?.status,
+        paymentStatus: item.Order?.paymentStatus,
+        createdAt: item.Order?.createdAt,
+      };
+    });
+
+    grossRevenue = money(grossRevenue);
+
+    const refundRequests = await RefundRequest.findAll({
+      where: {
+        status: APPROVED_REFUND_STATUSES,
+      },
+      include: [
+        {
+          model: Order,
+          as: 'order',
+          required: true,
+          attributes: [
+            'id',
+            'number',
+            'subtotal',
+            'refundAmount',
+            'refundStatus',
+            'createdAt',
+          ],
+          include: [
+            {
+              model: OrderItem,
+              as: 'items',
+              required: true,
+              attributes: [
+                'id',
+                'orderId',
+                'productId',
+                'price',
+                'quantity',
+                'subtotal',
+              ],
+              include: [
+                {
+                  model: Product,
+                  required: true,
+                  attributes: ['id', 'name', 'seller_id'],
+                  where: {
+                    seller_id: sellerId,
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      order: [['created_at', 'DESC']],
+    });
+
+    let refundAmount = 0;
+
+    const refundItems = refundRequests.map((refund) => {
+      const order = refund.order;
+      const sellerItems = order?.items || [];
+
+      const requestAmount = Number(refund.amount || 0);
+      const orderSubtotal = Number(order?.subtotal || 0);
+
+      const sellerSubtotal = sellerItems.reduce((sum, item) => {
+        const itemSubtotal = Number(item.subtotal || 0);
+        const fallbackSubtotal =
+          (Number(item.price) || 0) * (Number(item.quantity) || 0);
+
+        return sum + (itemSubtotal || fallbackSubtotal);
+      }, 0);
+
+      let sellerRefundAmount = 0;
+
+      if (orderSubtotal > 0) {
+        sellerRefundAmount = (requestAmount / orderSubtotal) * sellerSubtotal;
+      } else {
+        sellerRefundAmount = Math.min(requestAmount, sellerSubtotal);
+      }
+
+      sellerRefundAmount = Math.min(sellerRefundAmount, sellerSubtotal);
+      sellerRefundAmount = money(sellerRefundAmount);
+
+      refundAmount += sellerRefundAmount;
+
+      const refundDate = refund.processedAt || refund.createdAt;
+      if (refundDate) {
+        const dateKey = new Date(refundDate).toISOString().slice(0, 10);
+        const monthKey = new Date(refundDate).toISOString().slice(0, 7);
+
+        if (!revenueDateMap[dateKey]) {
+          revenueDateMap[dateKey] = {
+            date: dateKey,
+            grossRevenue: 0,
+            refundAmount: 0,
+            netRevenue: 0,
+            orderCount: 0,
+          };
+        }
+
+        revenueDateMap[dateKey].refundAmount += sellerRefundAmount;
+
+        if (!revenueMonthMap[monthKey]) {
+          revenueMonthMap[monthKey] = {
+            month: monthKey,
+            grossRevenue: 0,
+            refundAmount: 0,
+            netRevenue: 0,
+            orderCount: 0,
+          };
+        }
+
+        revenueMonthMap[monthKey].refundAmount += sellerRefundAmount;
+      }
+
+      return {
+        refundRequestId: refund.id,
+        orderId: refund.orderId,
+        orderNumber: order?.number,
+        status: refund.status,
+        requestAmount: money(requestAmount),
+        sellerSubtotal: money(sellerSubtotal),
+        sellerAffectedAmount: sellerRefundAmount,
+        reason: refund.reason,
+        processedAt: refund.processedAt,
+        createdAt: refund.createdAt,
+      };
+    });
+
+    refundAmount = money(refundAmount);
+
+    const adjustedGrossRevenue = Math.max(grossRevenue - refundAmount, 0);
+    const totalCommission = money(adjustedGrossRevenue * COMMISSION_RATE);
+    const netRevenue = Math.max(adjustedGrossRevenue - totalCommission, 0);
+
+    const payouts = await Payout.findAll({
+      where: { sellerId },
+      order: [['createdAt', 'DESC']],
+    });
+
+    const totalPaid = payouts
+      .filter((p) => p.status === 'paid')
+      .reduce((sum, p) => sum + Number(p.amount || 0), 0);
+
+    const pendingPayout = payouts
+      .filter((p) => p.status === 'pending')
+      .reduce((sum, p) => sum + Number(p.amount || 0), 0);
+
+    const rejectedPayout = payouts
+      .filter((p) => p.status === 'rejected')
+      .reduce((sum, p) => sum + Number(p.amount || 0), 0);
+
+    const availableToRequest = Math.max(
+      netRevenue - totalPaid - pendingPayout,
+      0
+    );
+
+    const revenueByDate = Object.values(revenueDateMap)
+      .map((item) => {
+        const adjusted = Math.max(item.grossRevenue - item.refundAmount, 0);
+        const commission = money(adjusted * COMMISSION_RATE);
+
+        return {
+          ...item,
+          adjustedGrossRevenue: adjusted,
+          commission,
+          netRevenue: Math.max(adjusted - commission, 0),
+        };
+      })
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    const revenueByMonth = Object.values(revenueMonthMap)
+      .map((item) => {
+        const adjusted = Math.max(item.grossRevenue - item.refundAmount, 0);
+        const commission = money(adjusted * COMMISSION_RATE);
+
+        return {
+          ...item,
+          adjustedGrossRevenue: adjusted,
+          commission,
+          netRevenue: Math.max(adjusted - commission, 0),
+        };
+      })
+      .sort((a, b) => a.month.localeCompare(b.month));
+
+    const topProducts = Object.values(productMap)
+      .map((item) => ({
+        ...item,
+        grossRevenue: money(item.grossRevenue),
+      }))
+      .sort((a, b) => b.grossRevenue - a.grossRevenue);
+
+    const totalOrders = orderItems.length;
+    const completedOrders = orderItems.length;
+    const averageOrderValue = totalOrders > 0 ? grossRevenue / totalOrders : 0;
+    const refundRate =
+      grossRevenue > 0 ? Number(((refundAmount / grossRevenue) * 100).toFixed(2)) : 0;
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        totalRevenue: grossRevenue,
+        totalOrders,
+        completedOrders,
+        averageOrderValue,
+
+        grossRevenue,
+        refundAmount,
+        adjustedGrossRevenue,
+        totalCommission,
+        platformFee: totalCommission,
+        netRevenue,
+        sellerRevenue: netRevenue,
+
+        totalPaid: money(totalPaid),
+        pendingPayout: money(pendingPayout),
+        rejectedPayout: money(rejectedPayout),
+        availableToRequest: money(availableToRequest),
+
+        refundRate,
+        commissionRate: COMMISSION_RATE,
+
+        revenueByProducts,
+        topProducts,
+        refundItems,
+        revenueByDate,
+        revenueByMonth,
+        payouts,
+      },
+    });
+  } catch (error) {
+    console.error('GET SELLER REVENUE ERROR:', error);
+    next(error);
+  }
+};
+const getSellerRefundRequests = async (req, res, next) => {
+  try {
+    const sellerId = req.user.id;
+
+    const sellerProducts = await Product.findAll({
+      where: {
+        seller_id: sellerId,
+      },
+      attributes: ['id', 'name'],
+      raw: true,
+    });
+
+    const productIds = sellerProducts.map((product) => product.id);
+
+    if (productIds.length === 0) {
+      return res.status(200).json({
+        status: 'success',
+        data: [],
+      });
+    }
+
+    const sellerOrderItems = await OrderItem.findAll({
+      where: {
+        productId: productIds,
+      },
+      attributes: ['orderId', 'productId', 'quantity', 'price'],
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'name', 'seller_id'],
+        },
+      ],
+    });
+
+    const orderIds = [
+      ...new Set(sellerOrderItems.map((item) => item.orderId)),
+    ];
+
+    if (orderIds.length === 0) {
+      return res.status(200).json({
+        status: 'success',
+        data: [],
+      });
+    }
+
+    const refundRequests = await RefundRequest.findAll({
+      where: {
+        orderId: orderIds,
+      },
+      include: [
+        {
+          model: Order,
+          as: 'order',
+          attributes: [
+            'id',
+            'number',
+            'status',
+            'paymentStatus',
+            'total',
+            'subtotal',
+            'discount',
+            'commissionAmount',
+            'sellerNetAmount',
+            'refundAmount',
+            'refundStatus',
+            'createdAt',
+          ],
+        },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'firstName', 'lastName', 'email', 'phone'],
+        },
+      ],
+      order: [['created_at', 'DESC']],
+    });
+
+    const orderItemMap = {};
+
+    sellerOrderItems.forEach((item) => {
+      const orderId = item.orderId;
+
+      if (!orderItemMap[orderId]) {
+        orderItemMap[orderId] = [];
+      }
+
+      orderItemMap[orderId].push({
+        orderItemId: item.id,
+        productId: item.productId,
+        productName: item.Product?.name || 'Sản phẩm',
+        quantity: item.quantity,
+        price: item.price,
+        total: Number(item.price || 0) * Number(item.quantity || 0),
+      });
+    });
+
+    const result = refundRequests.map((refund) => {
+      const plain = refund.toJSON();
+      const sellerItems = orderItemMap[plain.orderId] || [];
+
+      const sellerSubtotal = sellerItems.reduce(
+        (sum, item) => sum + Number(item.total || 0),
+        0
+      );
+
+      const orderSubtotal = Number(plain.order?.subtotal || 0);
+      const refundAmount = Number(plain.amount || 0);
+
+      const sellerAffectedAmount =
+        orderSubtotal > 0
+          ? Math.round((sellerSubtotal / orderSubtotal) * refundAmount)
+          : refundAmount;
+
+      return {
+        ...plain,
+        sellerItems,
+        sellerSubtotal,
+        sellerAffectedAmount,
+      };
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: result,
+    });
+  } catch (error) {
+    console.error('GET SELLER REFUND REQUESTS ERROR:', error);
+    next(error);
+  }
+};
+const getRecommendedProducts = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const finalLimit = parseInt(req.query.limit || 8);
+
+    const behaviors = await UserBehavior.findAll({
+      where: { userId },
+      raw: true,
+    });
+
+    if (!behaviors || behaviors.length === 0) {
+      return res.status(200).json({
+        status: 'success',
+        data: {
+          products: [],
+          basedOn: {
+            totalBehaviors: 0,
+            message: 'User chưa có hành vi để gợi ý',
+          },
+        },
+      });
+    }
+
+    // Gom điểm theo product_id
+    const productScoreMap = {};
+
+    behaviors.forEach((behavior) => {
+      if (!behavior.productId) return;
+
+      if (!productScoreMap[behavior.productId]) {
+        productScoreMap[behavior.productId] = {
+          productId: behavior.productId,
+          totalScore: 0,
+          actions: {},
+          lastActionAt: behavior.created_at || behavior.createdAt,
+        };
+      }
+
+      productScoreMap[behavior.productId].totalScore += Number(
+        behavior.score || 0
+      );
+
+      productScoreMap[behavior.productId].actions[behavior.actionType] =
+        (productScoreMap[behavior.productId].actions[behavior.actionType] ||
+          0) + 1;
+    });
+
+    const scoredProducts = Object.values(productScoreMap)
+      .filter((item) => item.totalScore > 0)
+      .sort((a, b) => b.totalScore - a.totalScore)
+      .slice(0, finalLimit);
+
+    const productIds = scoredProducts.map((item) => item.productId);
+
+    if (productIds.length === 0) {
+      return res.status(200).json({
+        status: 'success',
+        data: {
+          products: [],
+          basedOn: {
+            totalBehaviors: behaviors.length,
+            message: 'Chưa có sản phẩm nào có điểm',
+          },
+        },
+      });
+    }
+
+    const productsRaw = await Product.findAll({
+      where: {
+        id: {
+          [Op.in]: productIds,
+        },
+        status: 'active',
+      },
+      include: [
+        {
+          association: 'categories',
+          through: { attributes: [] },
+          required: false,
+        },
+        {
+          association: 'reviews',
+          attributes: ['rating'],
+          required: false,
+        },
+        {
+          association: 'variants',
+          required: false,
+        },
+      ],
+    });
+
+    const scoreMap = {};
+    scoredProducts.forEach((item, index) => {
+      scoreMap[item.productId] = {
+        totalScore: item.totalScore,
+        actions: item.actions,
+        rank: index + 1,
+      };
+    });
+
+    const products = productsRaw
+      .map((product) => {
+        const productJson = product.toJSON();
+
+        const ratings = {
+          average: 0,
+          count: 0,
+        };
+
+        if (productJson.reviews && productJson.reviews.length > 0) {
+          const totalRating = productJson.reviews.reduce(
+            (sum, review) => sum + review.rating,
+            0
+          );
+
+          ratings.average = parseFloat(
+            (totalRating / productJson.reviews.length).toFixed(1)
+          );
+          ratings.count = productJson.reviews.length;
+        }
+
+        let displayPrice = parseFloat(productJson.price) || 0;
+        let compareAtPrice = parseFloat(productJson.compareAtPrice) || null;
+
+        if (productJson.variants && productJson.variants.length > 0) {
+          const sortedVariants = productJson.variants.sort(
+            (a, b) => parseFloat(a.price) - parseFloat(b.price)
+          );
+
+          displayPrice = parseFloat(sortedVariants[0].price) || displayPrice;
+        }
+
+        delete productJson.reviews;
+
+        return {
+          ...productJson,
+          price: displayPrice,
+          compareAtPrice,
+          ratings,
+          behaviorScore: scoreMap[productJson.id]?.totalScore || 0,
+          behaviorActions: scoreMap[productJson.id]?.actions || {},
+          behaviorRank: scoreMap[productJson.id]?.rank || 999,
+        };
+      })
+      .sort((a, b) => b.behaviorScore - a.behaviorScore);
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        products,
+        basedOn: {
+          totalBehaviors: behaviors.length,
+          scoredProducts,
+        },
+      },
+    });
+  } catch (error) {
+    console.error('GET RECOMMENDED PRODUCTS ERROR:', error);
+    next(error);
+  }
+};
 module.exports = {
   getAllProducts,
   getProductById,
@@ -1557,4 +2553,11 @@ module.exports = {
   getProductVariants,
   getProductReviewsSummary,
   getProductFilters,
+  getMyProducts,
+   getSellerOrders,
+   getSellerDashboard,
+   getSellerRevenue,
+   updateSellerOrderStatus,
+   getSellerRefundRequests,
+   getRecommendedProducts,
 };

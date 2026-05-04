@@ -8,7 +8,7 @@ const {
 } = require('../models');
 const { AppError } = require('../middlewares/errorHandler');
 const { v4: uuidv4 } = require('uuid');
-
+const { trackUserBehavior } = require('../services/userBehavior.service');
 // Get cart
 const getCart = async (req, res, next) => {
   try {
@@ -272,8 +272,21 @@ const addToCart = async (req, res, next) => {
 
     await transaction.commit();
 
-    // Return updated cart
-    return getCart(req, res, next);
+if (req.user) {
+  await trackUserBehavior({
+    userId: req.user.id,
+    productId,
+    actionType: 'add_to_cart',
+    metadata: {
+      quantity,
+      variantId: variantId || null,
+      warrantyPackageIds: validWarrantyPackageIds,
+    },
+  });
+}
+
+// Return updated cart
+return getCart(req, res, next);
   } catch (error) {
     await transaction.rollback();
     next(error);

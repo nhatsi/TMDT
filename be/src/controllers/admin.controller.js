@@ -9,6 +9,9 @@ const {
   ProductVariant,
   ProductSpecification,
   WarrantyPackage,
+  Voucher,
+  RefundRequest,
+  sequelize,
 } = require('../models');
 const { Op, Sequelize } = require('sequelize');
 const { catchAsync } = require('../utils/catchAsync');
@@ -1835,13 +1838,616 @@ const toggleProductStatus = catchAsync(async (req, res) => {
     data: { product },
   });
 });
+/**
+ * Quản lý Seller - Lấy danh sách yêu cầu đăng ký seller
+ */
+const getSellerRequests = catchAsync(async (req, res) => {
+  const sellers = await User.findAll({
+    where: {
+      seller_status: 'pending',
+    },
+    attributes: {
+      exclude: ['password', 'verificationToken', 'resetPasswordToken'],
+    },
+    order: [['createdAt', 'DESC']],
+  });
 
+  res.status(200).json({
+    status: 'success',
+    data: {
+      sellers,
+    },
+  });
+});
+
+/**
+ * Quản lý Seller - Duyệt seller
+ */
+const approveSeller = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findByPk(id);
+
+  if (!user) {
+    throw new AppError('Không tìm thấy người dùng', 404);
+  }
+
+  if (user.seller_status !== 'pending') {
+    throw new AppError('Tài khoản này không ở trạng thái chờ duyệt seller', 400);
+  }
+
+  await user.update({
+    role: 'seller',
+    seller_status: 'approved',
+  });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Duyệt seller thành công',
+    data: {
+      user,
+    },
+  });
+});
+
+/**
+ * Quản lý Seller - Từ chối seller
+ */
+const rejectSeller = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findByPk(id);
+
+  if (!user) {
+    throw new AppError('Không tìm thấy người dùng', 404);
+  }
+
+  if (user.seller_status !== 'pending') {
+    throw new AppError('Tài khoản này không ở trạng thái chờ duyệt seller', 400);
+  }
+
+  await user.update({
+    role: 'customer',
+    seller_status: 'rejected',
+  });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Từ chối seller thành công',
+    data: {
+      user,
+    },
+  });
+});
+/**
+ * Quản lý Voucher - Lấy danh sách voucher
+ */
+const getAllVouchers = catchAsync(async (req, res) => {
+  const {
+    page = 1,
+    limit = 20,
+    search = '',
+    isActive = '',
+    sortBy = 'createdAt',
+    sortOrder = 'DESC',
+  } = req.query;
+
+  const offset = (parseInt(page) - 1) * parseInt(limit);
+  const whereClause = {};
+
+  if (search) {
+    whereClause[Op.or] = [
+      { code: { [Op.iLike]: `%${search}%` } },
+      { name: { [Op.iLike]: `%${search}%` } },
+      { description: { [Op.iLike]: `%${search}%` } },
+    ];
+  }
+
+  if (isActive !== '') {
+    whereClause.is_active = isActive === 'true';
+  }
+
+  const { count, rows: vouchers } = await Voucher.findAndCountAll({
+    where: whereClause,
+    limit: parseInt(limit),
+    offset,
+    order: [[sortBy, sortOrder.toUpperCase()]],
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      vouchers,
+      pagination: {
+        currentPage: parseInt(page),
+        totalPages: Math.ceil(count / limit),
+        totalItems: count,
+        itemsPerPage: parseInt(limit),
+      },
+    },
+  });
+});
+
+/**
+ * Quản lý Voucher - Tạo voucher mới
+ */
+const createVoucher = catchAsync(async (req, res) => {
+  const {
+    code,
+    name,
+    description,
+    discount_type,
+    discount_value,
+    min_order_value = 0,
+    max_discount,
+    start_date,
+    end_date,
+    usage_limit,
+    is_active = true,
+  } = req.body;
+
+  if (!code || !name || !discount_type || discount_value === undefined) {
+    throw new AppError('Vui lòng nhập đầy đủ thông tin voucher', 400);
+  }
+
+  const normalizedCode = String(code).trim().toUpperCase();
+
+  if (!['percent', 'fixed'].includes(discount_type)) {
+    throw new AppError('Loại giảm giá không hợp lệ', 400);
+  }
+
+  if (Number(discount_value) <= 0) {
+    throw new AppError('Giá trị giảm giá phải lớn hơn 0', 400);
+  }
+
+  if (discount_type === 'percent' && Number(discount_value) > 100) {
+    throw new AppError('Voucher phần trăm không được vượt quá 100%', 400);
+  }
+
+  const existedVoucher = await Voucher.findOne({
+    where: {
+      code: normalizedCode,
+    },
+  });
+
+  if (existedVoucher) {
+    throw new AppError('Mã voucher đã tồn tại', 400);
+  }
+
+  const voucher = await Voucher.create({
+    code: normalizedCode,
+    name,
+    description,
+    discount_type,
+    discount_value,
+    min_order_value,
+    max_discount: max_discount || null,
+    start_date: start_date || null,
+    end_date: end_date || null,
+    usage_limit: usage_limit || null,
+    used_count: 0,
+    is_active,
+  });
+
+  res.status(201).json({
+    status: 'success',
+    message: 'Tạo voucher thành công',
+    data: {
+      voucher,
+    },
+  });
+});
+
+/**
+ * Quản lý Voucher - Cập nhật voucher
+ */
+const updateVoucher = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const voucher = await Voucher.findByPk(id);
+
+  if (!voucher) {
+    throw new AppError('Không tìm thấy voucher', 404);
+  }
+
+  const {
+    code,
+    name,
+    description,
+    discount_type,
+    discount_value,
+    min_order_value,
+    max_discount,
+    start_date,
+    end_date,
+    usage_limit,
+    is_active,
+  } = req.body;
+
+  const updateData = {};
+
+  if (code !== undefined) {
+    const normalizedCode = String(code).trim().toUpperCase();
+
+    const existedVoucher = await Voucher.findOne({
+      where: {
+        code: normalizedCode,
+        id: {
+          [Op.ne]: id,
+        },
+      },
+    });
+
+    if (existedVoucher) {
+      throw new AppError('Mã voucher đã tồn tại', 400);
+    }
+
+    updateData.code = normalizedCode;
+  }
+
+  if (name !== undefined) updateData.name = name;
+  if (description !== undefined) updateData.description = description;
+
+  if (discount_type !== undefined) {
+    if (!['percent', 'fixed'].includes(discount_type)) {
+      throw new AppError('Loại giảm giá không hợp lệ', 400);
+    }
+
+    updateData.discount_type = discount_type;
+  }
+
+  if (discount_value !== undefined) {
+    if (Number(discount_value) <= 0) {
+      throw new AppError('Giá trị giảm giá phải lớn hơn 0', 400);
+    }
+
+    if (
+      (discount_type || voucher.discount_type) === 'percent' &&
+      Number(discount_value) > 100
+    ) {
+      throw new AppError('Voucher phần trăm không được vượt quá 100%', 400);
+    }
+
+    updateData.discount_value = discount_value;
+  }
+
+  if (min_order_value !== undefined) updateData.min_order_value = min_order_value;
+  if (max_discount !== undefined) updateData.max_discount = max_discount || null;
+  if (start_date !== undefined) updateData.start_date = start_date || null;
+  if (end_date !== undefined) updateData.end_date = end_date || null;
+  if (usage_limit !== undefined) updateData.usage_limit = usage_limit || null;
+  if (is_active !== undefined) updateData.is_active = is_active;
+
+  const updatedVoucher = await voucher.update(updateData);
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Cập nhật voucher thành công',
+    data: {
+      voucher: updatedVoucher,
+    },
+  });
+});
+
+/**
+ * Quản lý Voucher - Bật / tắt voucher
+ */
+const toggleVoucherStatus = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const voucher = await Voucher.findByPk(id);
+
+  if (!voucher) {
+    throw new AppError('Không tìm thấy voucher', 404);
+  }
+
+  await voucher.update({
+    is_active: !voucher.is_active,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    message: voucher.is_active ? 'Đã bật voucher' : 'Đã tắt voucher',
+    data: {
+      voucher,
+    },
+  });
+});
+
+/**
+ * Quản lý Voucher - Xóa voucher
+ */
+const deleteVoucher = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const voucher = await Voucher.findByPk(id);
+
+  if (!voucher) {
+    throw new AppError('Không tìm thấy voucher', 404);
+  }
+
+  await voucher.destroy();
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Xóa voucher thành công',
+  });
+});
+/**
+ * Quản lý Refund - Lấy danh sách yêu cầu khiếu nại / hoàn tiền
+ */
+const getAllRefundRequests = catchAsync(async (req, res) => {
+  const {
+    page = 1,
+    limit = 20,
+    status = '',
+    search = '',
+  } = req.query;
+
+  const offset = (parseInt(page) - 1) * parseInt(limit);
+  const whereClause = {};
+
+  if (status) {
+    whereClause.status = status;
+  }
+
+  const includeClause = [
+    {
+      model: User,
+      as: 'user',
+      attributes: ['id', 'firstName', 'lastName', 'email', 'phone'],
+    },
+    {
+      model: Order,
+      as: 'order',
+      attributes: [
+        'id',
+        'number',
+        'total',
+        'subtotal',
+        'discount',
+        'status',
+        'paymentStatus',
+        'sellerNetAmount',
+        'refundAmount',
+        'refundStatus',
+        'createdAt',
+      ],
+    },
+  ];
+
+  if (search) {
+    includeClause[1].where = {
+      number: {
+        [Op.iLike]: `%${search}%`,
+      },
+    };
+  }
+
+  const { count, rows: refundRequests } =
+    await RefundRequest.findAndCountAll({
+      where: whereClause,
+      include: includeClause,
+      limit: parseInt(limit),
+      offset,
+      order: [['created_at', 'DESC']],
+    });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      refundRequests,
+      pagination: {
+        currentPage: parseInt(page),
+        totalPages: Math.ceil(count / limit),
+        totalItems: count,
+        itemsPerPage: parseInt(limit),
+      },
+    },
+  });
+});
+
+/**
+ * Quản lý Refund - Duyệt yêu cầu hoàn tiền
+ * Khi duyệt sẽ trừ tiền sellerNetAmount của đơn đó
+ */
+const approveRefundRequest = catchAsync(async (req, res) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { id } = req.params;
+    const { adminNote } = req.body;
+
+    const refundRequest = await RefundRequest.findByPk(id, {
+      include: [
+        {
+          model: Order,
+          as: 'order',
+        },
+      ],
+      transaction,
+    });
+
+    if (!refundRequest) {
+      throw new AppError('Không tìm thấy yêu cầu hoàn tiền', 404);
+    }
+
+    if (refundRequest.status !== 'pending') {
+      throw new AppError('Yêu cầu này đã được xử lý trước đó', 400);
+    }
+
+    const order = refundRequest.order;
+
+    if (!order) {
+      throw new AppError('Không tìm thấy đơn hàng liên quan', 404);
+    }
+
+   const refundAmount = Number(refundRequest.amount || 0);
+const orderTotal = Number(order.total || 0);
+
+const currentCommissionAmount = Number(order.commissionAmount || 0);
+const currentSellerNetAmount = Number(order.sellerNetAmount || 0);
+const currentRefundAmount = Number(order.refundAmount || 0);
+
+if (refundAmount <= 0) {
+  throw new AppError('Số tiền hoàn không hợp lệ', 400);
+}
+
+if (orderTotal <= 0) {
+  throw new AppError('Tổng tiền đơn hàng không hợp lệ', 400);
+}
+
+if (refundAmount > orderTotal) {
+  throw new AppError('Số tiền hoàn không được lớn hơn tổng tiền đơn hàng', 400);
+}
+
+const refundRatio = refundAmount / orderTotal;
+
+const commissionRefundAmount = Math.round(
+  currentCommissionAmount * refundRatio
+);
+
+const sellerRefundAmount = Math.round(
+  currentSellerNetAmount * refundRatio
+);
+
+const newCommissionAmount = Math.max(
+  currentCommissionAmount - commissionRefundAmount,
+  0
+);
+
+const newSellerNetAmount = Math.max(
+  currentSellerNetAmount - sellerRefundAmount,
+  0
+);
+
+const newRefundAmount = currentRefundAmount + refundAmount;
+
+    await order.update(
+  {
+    commissionAmount: newCommissionAmount,
+    sellerNetAmount: newSellerNetAmount,
+    refundAmount: newRefundAmount,
+    refundStatus: 'approved',
+  },
+  { transaction }
+);
+
+    await refundRequest.update(
+      {
+        status: 'approved',
+        adminNote: adminNote || 'Admin đã duyệt yêu cầu hoàn tiền',
+        processedBy: req.user.id,
+        processedAt: new Date(),
+      },
+      { transaction }
+    );
+
+    await transaction.commit();
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Duyệt hoàn tiền thành công. Tiền seller đã được điều chỉnh.',
+      data: {
+        refundRequest,
+        order: {
+          id: order.id,
+          number: order.number,
+          refundAmount: newRefundAmount,
+          refundStatus: 'approved',
+          sellerNetAmount: newSellerNetAmount,
+        },
+      },
+    });
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
+  }
+});
+
+/**
+ * Quản lý Refund - Từ chối yêu cầu hoàn tiền
+ */
+const rejectRefundRequest = catchAsync(async (req, res) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { id } = req.params;
+    const { adminNote } = req.body;
+
+    const refundRequest = await RefundRequest.findByPk(id, {
+      include: [
+        {
+          model: Order,
+          as: 'order',
+        },
+      ],
+      transaction,
+    });
+
+    if (!refundRequest) {
+      throw new AppError('Không tìm thấy yêu cầu hoàn tiền', 404);
+    }
+
+    if (refundRequest.status !== 'pending') {
+      throw new AppError('Yêu cầu này đã được xử lý trước đó', 400);
+    }
+
+    await refundRequest.update(
+      {
+        status: 'rejected',
+        adminNote: adminNote || 'Admin đã từ chối yêu cầu hoàn tiền',
+        processedBy: req.user.id,
+        processedAt: new Date(),
+      },
+      { transaction }
+    );
+
+    if (refundRequest.order) {
+      await refundRequest.order.update(
+        {
+          refundStatus: 'rejected',
+        },
+        { transaction }
+      );
+    }
+
+    await transaction.commit();
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Từ chối yêu cầu hoàn tiền thành công',
+      data: {
+        refundRequest,
+      },
+    });
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
+  }
+});
 module.exports = {
   getDashboardStats,
   getDetailedStats,
   getAllUsers,
   updateUser,
   deleteUser,
+
+  getSellerRequests,
+approveSeller,
+rejectSeller,
+
+ getAllVouchers,
+  createVoucher,
+  updateVoucher,
+  toggleVoucherStatus,
+  deleteVoucher,
+
+
+  getAllRefundRequests,
+approveRefundRequest,
+rejectRefundRequest,
+
   getProductById,
   createProduct,
   updateProduct,
